@@ -22,7 +22,7 @@ export default function Navbar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" color="transparent" elevation={0} sx={{ py: 2 }}>
-                <Container sx={{ width: '100%', maxWidth: 1200, px: { xs: 2, sm: 3, md: 6 } }}>
+                <Container sx={{ width: '100%', maxWidth: 1200}}>
                     <Toolbar sx={{  justifyContent: 'space-between' }}>
                         <Box
                             component={RouterLink}
