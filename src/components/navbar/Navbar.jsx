@@ -68,8 +68,8 @@ export default function Navbar() {
                        
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3, alignItems: 'center' }}>
                             <Link component={RouterLink} to={'/'} color="inherit" underline='none'>Home</Link>
-                            <Link component={RouterLink} to={'/cart'} color="inherit" underline='none'>Shop</Link>
-                            <Link component={RouterLink} to={'/login'} color="inherit" underline='none'>Categories</Link>
+                            <Link component={RouterLink} to={'/shop'} color="inherit" underline='none'>Shop</Link>
+                            <Link component={RouterLink} to={'/categories'} color="inherit" underline='none'>Categories</Link>
                             <Link component={RouterLink} to={'/register'} color="inherit" underline='none'>About</Link>
                             <Link component={RouterLink} to={'/contact'} color="inherit" underline='none'>Contact</Link>
                         </Box>

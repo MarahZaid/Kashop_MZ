@@ -3,20 +3,24 @@ import {
     Button,
     TextField,
     Typography,
-    Paper
+    Paper,
+    CircularProgress
 } from '@mui/material'
 
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerSchema } from '../../../validation/RegisterSchema'
-import { GlassTextField } from '../GlassTextField'
+import { GlassTextField } from './../../../ui/GlassTextField'
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { useState } from 'react'
 
 export default function Register() {
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(registerSchema)
+
+    const [serverErrors, setServerErrors] = useState([]);
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+        resolver: yupResolver(registerSchema), mode: 'onBlur'
     })
 
     const registerForm = async (values) => {
@@ -27,7 +31,8 @@ export default function Register() {
             )
             console.log(response)
         } catch (error) {
-            console.log(error)
+            setServerErrors(error.response.data.errors);
+            console.log(error.response.data.errors)
         }
     }
 
@@ -107,6 +112,8 @@ export default function Register() {
                     Create your account
                 </Typography>
 
+
+
                 {/* FORM */}
                 <Box
                     component="form"
@@ -123,7 +130,7 @@ export default function Register() {
                         variant="outlined"
                         error={!!errors.userName}
                         helperText={errors.userName?.message}
-                        
+
                     />
 
                     <GlassTextField
@@ -158,12 +165,18 @@ export default function Register() {
                         error={!!errors.phoneNumber}
                         helperText={errors.phoneNumber?.message}
                     />
+                    {serverErrors.length > 0 && (
+                        <Box  color={'red'}>
+                            {serverErrors.map((err) => <Typography>{err}</Typography>)}
+
+                        </Box>
+                    )}
 
                     <Button
                         type="submit"
                         size="large"
                         sx={{
-                            mt: 2,
+                            mt: 1,
                             py: 1.4,
                             borderRadius: 3,
                             fontWeight: 'bold',
@@ -174,37 +187,41 @@ export default function Register() {
                                 opacity: 0.9
                             }
                         }}
+                        disabled={isSubmitting}
                     >
-                        Register
+                        {isSubmitting? <CircularProgress color='white'/> : 'Register'}
+                        
                     </Button>
                 </Box>
+
+
                 <Typography
-  sx={{
-    mt: 2,
-    textAlign: "center",
-    color: "rgba(255,255,255,0.7)",
-    fontSize: "14px",
-  }}
->
-  Already have an account?{" "}
-  <Link
-    component={RouterLink}
-    to="/login"
-    underline="none"
-    sx={{
-      color: "#d94fd5",
-      fontWeight: 600,
-      ml: 0.5,
-      transition: "0.3s",
-      "&:hover": {
-        color: "#b45cff",
-        textShadow: "0 0 8px rgba(217,79,213,0.6)",
-      },
-    }}
-  >
-    Login
-  </Link>
-</Typography>
+                    sx={{
+                        mt: 2,
+                        textAlign: "center",
+                        color: "rgba(255,255,255,0.7)",
+                        fontSize: "14px",
+                    }}
+                >
+                    Already have an account?{" "}
+                    <Link
+                        component={RouterLink}
+                        to="/login"
+                        underline="none"
+                        sx={{
+                            color: "#d94fd5",
+                            fontWeight: 600,
+                            ml: 0.5,
+                            transition: "0.3s",
+                            "&:hover": {
+                                color: "#b45cff",
+                                textShadow: "0 0 8px rgba(217,79,213,0.6)",
+                            },
+                        }}
+                    >
+                        Login
+                    </Link>
+                </Typography>
             </Paper>
         </Box>
     )

@@ -10,16 +10,21 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../../validation/LoginSchema";
-import { GlassTextField } from "../GlassTextField";
-import { Link as RouterLink } from "react-router-dom";
+import { GlassTextField } from "./../../../ui/GlassTextField";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../../store/useAuthStore";
+
 
 export default function Login() {
+
+  const setToken = useAuthStore((state)=>state.setToken);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(loginSchema), mode:'onBlur'
   });
 
   const loginForm = async (values) => {
@@ -28,6 +33,10 @@ export default function Login() {
         "https://knowledgeshop.runasp.net/api/auth/Account/Login",
         values
       );
+      if (response.status === 200){
+        setToken(response.data.accessToken);
+        navigate('/');
+      }
       console.log(response);
     } catch (error) {
       console.log(error);
