@@ -16,7 +16,7 @@ export default function Shop() {
     return (
         <Box>
             {data?.response?.data?.map(product => (
-                <Link to={`/product/${product.id}`}>
+                <Link to={`/products/${product.id}`}>
                 <Box>{product.name}</Box>
                 </Link>
             ))}
