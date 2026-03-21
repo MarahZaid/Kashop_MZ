@@ -8,6 +8,7 @@ import ProductDetails from "./pages/products/ProductDetails.jsx";
 import CategoriesPage from "./pages/categoties/CategoriesPage.jsx";
 import Shop from "./pages/shop/Shop.jsx";
 import ProtectedRouter from "./ProtectedRouter.jsx";
+import About from "./pages/about/About.jsx";
 
 
 
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: '/shop',
         element: <Shop />
+      },
+      {
+        path: '/about',
+        element: <About />
       }
     ]
   }

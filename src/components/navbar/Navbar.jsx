@@ -98,7 +98,7 @@ export default function Navbar() {
                             <Link component={RouterLink} to={'/'} color="inherit" underline='none'>Home</Link>
                             <Link component={RouterLink} to={'/shop'} color="inherit" underline='none'>Shop</Link>
                             <Link component={RouterLink} to={'/categories'} color="inherit" underline='none'>Categories</Link>
-                            <Link component={RouterLink} to={'/'} color="inherit" underline='none'>About</Link>
+                            <Link component={RouterLink} to={'/about'} color="inherit" underline='none'>About</Link>
                             <Link component={RouterLink} to={'/'} color="inherit" underline='none'>Contact</Link>
                         </Box>
 
@@ -170,7 +170,7 @@ export default function Navbar() {
                                 <ListItemButton component={RouterLink} to="/categories" onClick={() => setOpen(false)}>
                                     <ListItemText primary="Categories" />
                                 </ListItemButton>
-                                <ListItemButton component={RouterLink} to="/">
+                                <ListItemButton component={RouterLink} to="/about">
                                     <ListItemText primary="About" />
                                 </ListItemButton>
                                 <ListItemButton component={RouterLink} to="/">
