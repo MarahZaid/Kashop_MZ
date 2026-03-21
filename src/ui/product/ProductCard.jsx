@@ -100,9 +100,7 @@ export default function ProductCard({ product }) {
             mb: 1
           }}
         >
-          <Typography variant="body2" color="text.secondary">
-            Product
-          </Typography>
+          
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             <StarIcon sx={{ fontSize: 16, color: "#fbbf24" }} />

@@ -75,7 +75,7 @@ export default function Products() {
                                 color="inherit"
                                 sx={{ display: "block" }}
                             >
-                                <ProductCard product={product} />
+                                <ProductCard product={product}  />
                             </Link>
 
                         </Grid>

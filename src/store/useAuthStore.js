@@ -1,7 +1,7 @@
 import {create} from 'zustand'
 export const useAuthStore = create((set)=>
     ({
-        token: localStorage.getItem("accessToken"),
+        token: localStorage.getItem("accesstoken"),
         setToken: (newToken)=>{
             set({
                 token:newToken

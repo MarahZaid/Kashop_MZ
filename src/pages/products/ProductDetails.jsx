@@ -10,11 +10,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Loader from "../../ui/loader/Loader";
 import { useState } from "react";
+import useAddToCart from "../../hooks/useAddToCart";
 
 export default function ProductDetails() {
     const { id } = useParams();
     const { data, isLoading, isError, error } = useProduct(id);
     const [quantity, setQuantity] = useState(1);
+
+    const { mutate: addToCart, isPending } = useAddToCart();
 
     if (isLoading) return <Loader />;
     if (isError) return <Box color={'red'} sx={{ p: 5 }}>{error.message}</Box>;
@@ -60,7 +63,7 @@ export default function ProductDetails() {
 
                     <Grid container spacing={2} alignItems="center">
 
-                        <Grid item size={{xs:12, sm:3}}>
+                        <Grid item size={{ xs: 12, sm: 3 }}>
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -82,23 +85,28 @@ export default function ProductDetails() {
                             </Box>
                         </Grid>
 
-                        <Grid item size={{xs:12, sm:8}}>
+                        <Grid item size={{ xs: 12, sm: 8 }}>
                             <Button
+                            disabled={isPending}
                                 fullWidth
                                 variant="contained"
                                 startIcon={<ShoppingBagOutlinedIcon />}
                                 sx={{
-                                    bgcolor: '#A855F7',
-                                    '&:hover': { bgcolor: '#9333EA' },
+                                    bgcolor: '#c026d3',
+                                    '&:hover': { bgcolor: '#9d1cae' },
                                     py: 1.5,
                                     textTransform: 'none'
                                 }}
+                                onClick={() => addToCart({
+                                    ProductId: product.id,
+                                    Count: quantity
+                                })}
                             >
                                 Add to Cart
                             </Button>
                         </Grid>
 
-                        <Grid item size={{xs:1, sm:1}}>
+                        <Grid item size={{ xs: 1, sm: 1 }}>
                             <IconButton
                                 sx={{
                                     border: '1px solid #ddd',
@@ -128,7 +136,7 @@ export default function ProductDetails() {
                             <Grid item size={{ xs: 12 }} key={idx}>
                                 <Paper elevation={0} sx={{ p: 3, bgcolor: '#F9FAFB', borderRadius: '12px' }}>
                                     <Stack direction="row" spacing={2} alignItems="flex-start">
-                                        <Avatar sx={{ bgcolor: '#A855F7' }}>{rev.userName.charAt(0).toUpperCase()}</Avatar>
+                                        <Avatar sx={{ bgcolor: '#c026d3' }}>{rev.userName.charAt(0).toUpperCase()}</Avatar>
                                         <Box sx={{ width: '100%' }}>
                                             <Stack direction="row" justifyContent="space-between" alignItems="center">
                                                 <Typography variant="subtitle1" fontWeight="bold">

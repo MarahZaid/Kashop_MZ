@@ -1,17 +1,18 @@
 import axios from "axios";
-const token = localStorage.getItem("accessToken");
 
 const authAxiosInstance = axios.create({
     baseURL: 'https://knowledgeshop.runasp.net/api',
-    headers:{
-        'Accept-Language':'en',
-        'Authorization':`Bearer ${token}`
-        
+    headers: {
+        'Accept-Language': 'en',
     }
 });
 
+authAxiosInstance.interceptors.request.use((config) => {
+    const token = localStorage.getItem("accesstoken");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
 export default authAxiosInstance;
-
-
-
-
