@@ -1,13 +1,18 @@
 import { Box, Container, Grid, Typography, Chip } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 
-const stats = [
-  { value: "50K+", label: "Happy Customers" },
-  { value: "500+", label: "Products" },
-  { value: "15+", label: "Countries" },
-  { value: "4.9", label: "Average Rating" },
-];
+ 
 
 export default function AboutHeroSection() {
+  const { t } = useTranslation();
+
+  const stats = [
+    { value: "50K+", label: t("Happy Customers") },
+    { value: "500+", label: t("Products") },
+    { value: "15+", label: t("Countries") },
+    { value: "4.9", label: t("Average Rating") },
+  ];
+
   return (
     <Box>
       {/* HERO */}
@@ -21,7 +26,7 @@ export default function AboutHeroSection() {
       >
         <Container maxWidth="md">
           <Chip
-            label="Our Story"
+            label={t('Our Story')}
             sx={{
               mb: 3,
               px: 2,
@@ -39,7 +44,7 @@ export default function AboutHeroSection() {
               fontSize: { xs: "2rem", md: "3rem" },
             }}
           >
-            Fashion That Inspires Confidence
+            {t('Fashion That Inspires Confidence')}
           </Typography>
 
           <Typography
@@ -50,9 +55,7 @@ export default function AboutHeroSection() {
               lineHeight: 1.8,
             }}
           >
-            Founded in 2018, Luxe began with a simple mission: to create
-            beautiful, high-quality fashion that empowers people to express
-            their unique style without compromising on ethics or sustainability.
+            {t('about_hero_desc')}
           </Typography>
         </Container>
       </Box>

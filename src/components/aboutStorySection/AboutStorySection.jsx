@@ -1,6 +1,8 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import siteIcon from "../../assets/hero-pg.jpg"
+import { useTranslation } from 'react-i18next';
 export default function AboutStorySection() {
+  const { t } = useTranslation();
   return (
     <Box sx={{ py: { xs: 8, md: 12 } }}>
       <Container maxWidth="lg">
@@ -17,36 +19,28 @@ export default function AboutStorySection() {
               fontWeight={800}
               sx={{ mb: 3 }}
             >
-              From Passion to Purpose
+              {t('From Passion to Purpose')}
             </Typography>
 
             <Typography
               color="text.secondary"
               sx={{ mb: 3, lineHeight: 1.9 }}
             >
-              What started as a small collection of handcrafted accessories has
-              grown into a global fashion destination, but our core values
-              remain unchanged. We believe that beautiful design and ethical
-              practices can coexist.
+              {t('about_story_1')}
             </Typography>
 
             <Typography
               color="text.secondary"
               sx={{ mb: 3, lineHeight: 1.9 }}
             >
-              Every piece in our collection is thoughtfully designed and
-              carefully crafted. We work directly with artisans and
-              manufacturers who share our commitment to fair wages, safe
-              working conditions, and sustainable practices.
+              {t('about_story_2')}
             </Typography>
 
             <Typography
               color="text.secondary"
               sx={{ lineHeight: 1.9 }}
             >
-              Our journey has been shaped by our incredible community of
-              customers who inspire us every day. Your support enables us to
-              continue pushing boundaries while staying true to our mission.
+              {t('about_story_3')}
             </Typography>
           </Grid>
 

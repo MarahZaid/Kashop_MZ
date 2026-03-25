@@ -1,7 +1,6 @@
 import {
     Box,
     Button,
-    TextField,
     Typography,
     Paper,
     CircularProgress
@@ -15,8 +14,10 @@ import { GlassTextField } from './../../../ui/GlassTextField'
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next';
 
 export default function Register() {
+    const { t } = useTranslation();
 
     const [serverErrors, setServerErrors] = useState([]);
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
@@ -109,7 +110,7 @@ export default function Register() {
                 </Typography>
 
                 <Typography textAlign="center" mb={4} color="gray">
-                    Create your account
+                    {t('Create your account')}
                 </Typography>
 
 
@@ -125,7 +126,7 @@ export default function Register() {
                 >
                     <GlassTextField
                         {...register("userName")}
-                        label="User Name"
+                        label={t('User Name')}
                         fullWidth
                         variant="outlined"
                         error={!!errors.userName}
@@ -135,7 +136,7 @@ export default function Register() {
 
                     <GlassTextField
                         {...register('fullName')}
-                        label="Full Name"
+                        label={t('Full Name')}
                         fullWidth
                         error={!!errors.fullName}
                         helperText={errors.fullName?.message}
@@ -143,7 +144,7 @@ export default function Register() {
 
                     <GlassTextField
                         {...register('email')}
-                        label="Email"
+                        label={t('Email')}
                         fullWidth
                         error={!!errors.email}
                         helperText={errors.email?.message}
@@ -151,7 +152,7 @@ export default function Register() {
 
                     <GlassTextField
                         {...register('password')}
-                        label="Password"
+                        label={t('Password')}
                         type="password"
                         fullWidth
                         error={!!errors.password}
@@ -160,7 +161,7 @@ export default function Register() {
 
                     <GlassTextField
                         {...register('phoneNumber')}
-                        label="Phone Number"
+                        label={t('Phone Number')}
                         fullWidth
                         error={!!errors.phoneNumber}
                         helperText={errors.phoneNumber?.message}
@@ -189,7 +190,7 @@ export default function Register() {
                         }}
                         disabled={isSubmitting}
                     >
-                        {isSubmitting? <CircularProgress color='white'/> : 'Register'}
+                        {isSubmitting ? <CircularProgress color='white'/> : t('Register')}
                         
                     </Button>
                 </Box>
@@ -203,7 +204,7 @@ export default function Register() {
                         fontSize: "14px",
                     }}
                 >
-                    Already have an account?{" "}
+                    {t('Already have an account?')}{" "}
                     <Link
                         component={RouterLink}
                         to="/login"
@@ -219,7 +220,7 @@ export default function Register() {
                             },
                         }}
                     >
-                        Login
+                        {t('Login')}
                     </Link>
                 </Typography>
             </Paper>

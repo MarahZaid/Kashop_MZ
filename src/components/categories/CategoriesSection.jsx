@@ -3,8 +3,10 @@ import { Box, Container, Grid, Card, CardContent, Typography } from "@mui/materi
 import Loader from "../../ui/loader/Loader";
 import useCategories from "../../hooks/useCategories";
 import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 export default function CategoriesSection() {
+    const { t } = useTranslation();
     const { data, isLoading, isError, error } = useCategories();
 
     if (isLoading) return <Loader />;
@@ -19,10 +21,10 @@ export default function CategoriesSection() {
                 {/* Title */}
                 <Box sx={{ textAlign: "center", mb: 6 }}>
                     <Typography variant="h4" fontWeight={700}>
-                        Shop by Category
+                        {t('Shop by Category')}
                     </Typography>
                     <Typography color="text.secondary">
-                        Browse all product categories
+                        {t('Browse all product categories')}
                     </Typography>
                 </Box>
 

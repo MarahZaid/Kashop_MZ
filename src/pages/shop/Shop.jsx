@@ -34,17 +34,21 @@ import useProducts from "../../hooks/useProducts";
 import useCategories from "../../hooks/useCategories";
 import ProductCard from "../../ui/product/ProductCard";
 import Loader from "../../ui/loader/Loader";
+import { useTranslation } from 'react-i18next';
 
-const SORT_OPTIONS = [
-    { value: "", label: "Default" },
-    { value: "price", label: "Price" },
-    { value: "rate", label: "Rating" },
-    { value: "name", label: "Name" },
-];
+
 
 const PRODUCTS_PER_PAGE = 12;
 
 export default function Shop() {
+    const { t } = useTranslation();
+    const SORT_OPTIONS = [
+        { value: "", label: t("Default") },
+        { value: "price", label: t("Price") },
+        { value: "rate", label: t("Rating") },
+        { value: "name", label: t("Name") },
+    ];
+
     // Filter State
     const [search, setSearch] = useState("");
     const [searchInput, setSearchInput] = useState("");
@@ -123,24 +127,24 @@ export default function Shop() {
                     {/* Breadcrumb */}
                     <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
                         <Link component={RouterLink} to="/" sx={{ color: "rgba(255,255,255,0.5)", fontSize: 14, textDecoration: "none" }}>
-                            Home
+                            {t('Home')}
                         </Link>
                         <Typography sx={{ color: "rgba(255,255,255,0.3)", fontSize: 14 }}>/</Typography>
-                        <Typography sx={{ color: "white", fontSize: 14 }}>Products</Typography>
+                        <Typography sx={{ color: "white", fontSize: 14 }}>{t('Products')}</Typography>
                     </Box>
 
                     <Typography variant="h3" fontWeight={800} color="white" sx={{ mb: 1 }}>
-                        Explore Our{" "}
+                        {t('Explore Our')}{" "}
                         <Box component="span" sx={{
                             background: "linear-gradient(45deg,#a855f7,#ec4899)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                         }}>
-                            Products
+                            {t('Products')}
                         </Box>
                     </Typography>
                     <Typography sx={{ color: "rgba(255,255,255,0.55)", fontSize: 16 }}>
-                        Discover the latest trends and top-quality items hand-picked just for you.
+                        {t('shop_header_desc')}
                     </Typography>
                 </Container>
             </Box>
@@ -159,7 +163,7 @@ export default function Shop() {
                             }}>
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                     <FilterListIcon sx={{ color: "#c026d3" }} />
-                                    <Typography fontWeight={700} fontSize={16}>Filters</Typography>
+                                    <Typography fontWeight={700} fontSize={16}>{t('Filters')}</Typography>
                                     {activeFiltersCount > 0 && (
                                         <Chip
                                             label={activeFiltersCount}
@@ -175,7 +179,7 @@ export default function Shop() {
                                         startIcon={<CloseIcon fontSize="small" />}
                                         sx={{ color: "#64748b", textTransform: "none", fontSize: 12 }}
                                     >
-                                        Clear all
+                                        {t('Clear all')}
                                     </Button>
                                 )}
                             </Box>
@@ -185,7 +189,7 @@ export default function Shop() {
                                 <TextField
                                     fullWidth
                                     size="small"
-                                    placeholder="Search products..."
+                                    placeholder={t('Search products...')}
                                     value={searchInput}
                                     onChange={(e) => setSearchInput(e.target.value)}
                                     onKeyDown={(e) => e.key === "Enter" && handleApplyFilters()}
@@ -212,7 +216,7 @@ export default function Shop() {
                                     onClick={() => setOpenCategories(!openCategories)}
                                     sx={{ p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
                                 >
-                                    <Typography fontWeight={600} fontSize={14}>Categories</Typography>
+                                    <Typography fontWeight={600} fontSize={14}>{t('Categories')}</Typography>
                                     {openCategories ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
                                 </Box>
                                 <Collapse in={openCategories}>
@@ -226,7 +230,7 @@ export default function Shop() {
                                                 "&.Mui-selected:hover": { bgcolor: "#fdf4ff" },
                                             }}
                                         >
-                                            <ListItemText primary="All Categories" primaryTypographyProps={{ fontSize: 13 }} />
+                                            <ListItemText primary={t('All Categories')} primaryTypographyProps={{ fontSize: 13 }} />
                                         </ListItemButton>
                                         {categories.map((cat) => (
                                             <ListItemButton
@@ -255,7 +259,7 @@ export default function Shop() {
                                     onClick={() => setOpenPrice(!openPrice)}
                                     sx={{ p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
                                 >
-                                    <Typography fontWeight={600} fontSize={14}>Price Range</Typography>
+                                    <Typography fontWeight={600} fontSize={14}>{t('Price Range')}</Typography>
                                     {openPrice ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
                                 </Box>
                                 <Collapse in={openPrice}>
@@ -287,7 +291,7 @@ export default function Shop() {
                                     onClick={() => setOpenSort(!openSort)}
                                     sx={{ p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
                                 >
-                                    <Typography fontWeight={600} fontSize={14}>Sort By</Typography>
+                                    <Typography fontWeight={600} fontSize={14}>{t('Sort By')}</Typography>
                                     {openSort ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
                                 </Box>
                                 <Collapse in={openSort}>
@@ -310,8 +314,8 @@ export default function Shop() {
                                                 onChange={(e) => setAscending(e.target.value)}
                                                 sx={{ borderRadius: 2, "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#c026d3" } }}
                                             >
-                                                <MenuItem value={true}>Ascending ↑</MenuItem>
-                                                <MenuItem value={false}>Descending ↓</MenuItem>
+                                                <MenuItem value={true}>{t('Ascending')} ↑</MenuItem>
+                                                <MenuItem value={false}>{t('Descending')} ↓</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Box>
@@ -335,7 +339,7 @@ export default function Shop() {
                                         "&:hover": { bgcolor: "#a21caf" },
                                     }}
                                 >
-                                    Apply Filters
+                                    {t('Apply Filters')}
                                 </Button>
                             </Box>
                         </Paper>
@@ -347,14 +351,14 @@ export default function Shop() {
                         {/* Top bar */}
                         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
                             <Typography color="text.secondary" fontSize={14}>
-                                {isLoading ? "Loading..." : `${products.length} products found`}
+                                {isLoading ? t('Loading...') : `${products.length} ${t('products found')}`}
                             </Typography>
 
                             {/* Active filter chips */}
                             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                                 {selectedCategory && (
                                     <Chip
-                                        label={`Category: ${selectedCategory}`}
+                                        label={`${t('Category')}: ${selectedCategory}`} 
                                         size="small"
                                         onDelete={() => { setSelectedCategory(""); setPage(1); }}
                                         sx={{ bgcolor: "#fdf4ff", color: "#c026d3", border: "1px solid #e879f9" }}
@@ -399,14 +403,14 @@ export default function Shop() {
                                         <Grid item size={{ xs: 12 }}>
                                             <Box sx={{ textAlign: "center", py: 12 }}>
                                                 <Typography fontSize={48} mb={2}>🔍</Typography>
-                                                <Typography variant="h6" fontWeight={600} mb={1}>No products found</Typography>
-                                                <Typography color="text.secondary" mb={3}>Try adjusting your filters or search term.</Typography>
+                                                <Typography variant="h6" fontWeight={600} mb={1}>{t('No products found')}</Typography>
+                                                <Typography color="text.secondary" mb={3}>{t('no_products_desc')}</Typography>
                                                 <Button
                                                     variant="outlined"
                                                     onClick={handleClearFilters}
                                                     sx={{ borderColor: "#c026d3", color: "#c026d3", borderRadius: 2, textTransform: "none" }}
                                                 >
-                                                    Clear Filters
+                                                    {t('Clear Filters')}
                                                 </Button>
                                             </Box>
                                         </Grid>

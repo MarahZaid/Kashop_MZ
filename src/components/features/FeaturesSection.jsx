@@ -3,31 +3,38 @@ import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
+import { useTranslation } from 'react-i18next';
 
-const features = [
-  {
-    icon: <LocalShippingOutlinedIcon sx={{ color: "#c026d3" }} />,
-    title: "Free Shipping",
-    desc: "Free shipping on all orders over $100. Express delivery available.",
-  },
-  {
-    icon: <SecurityOutlinedIcon sx={{ color: "#c026d3" }} />,
-    title: "Secure Payment",
-    desc: "Your payment information is processed securely with SSL encryption.",
-  },
-  {
-    icon: <ReplayOutlinedIcon sx={{ color: "#c026d3" }} />,
-    title: "Easy Returns",
-    desc: "30-day return policy. No questions asked, hassle-free returns.",
-  },
-  {
-    icon: <SupportAgentOutlinedIcon sx={{ color: "#c026d3" }} />,
-    title: "24/7 Support",
-    desc: "Our support team is available around the clock to assist you.",
-  },
-];
+
+
+
 
 export default function FeaturesSection() {
+  const { t } = useTranslation();
+
+   const features = [
+    {
+      icon: <LocalShippingOutlinedIcon sx={{ color: "#c026d3" }} />,
+      title: t("Free Shipping"),
+      desc: t("free_shipping_desc"),
+    },
+    {
+      icon: <SecurityOutlinedIcon sx={{ color: "#c026d3" }} />,
+      title: t("Secure Payment"),
+      desc: t("secure_payment_desc"),
+    },
+    {
+      icon: <ReplayOutlinedIcon sx={{ color: "#c026d3" }} />,
+      title: t("Easy Returns"),
+      desc: t("easy_returns_desc"),
+    },
+    {
+      icon: <SupportAgentOutlinedIcon sx={{ color: "#c026d3" }} />,
+      title: t("24/7 Support"),
+      desc: t("support_desc"),
+    },
+  ];
+  
   return (
     <Box sx={{ py: 7, width: "100%" }}>
       <Container maxWidth="lg">

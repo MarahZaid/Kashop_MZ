@@ -5,10 +5,11 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import TikTokIcon from "@mui/icons-material/MusicNote";
 import siteIcon from '../../assets/siteIcon.png';
 
-
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from "react-router-dom";
 
 export default function Footer() {
+    const { t } = useTranslation();
     return (
         <Box
             component="footer"
@@ -63,8 +64,7 @@ export default function Footer() {
 
 
                         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                            Discover curated collections of premium fashion,
-                            accessories, and lifestyle products.
+                            {t('footer_desc')}
                         </Typography>
 
                         <Box sx={{ display: "flex", gap: 1 }}>
@@ -78,42 +78,37 @@ export default function Footer() {
                     {/* Shop */}
                     <Grid size={{ xs: 12, md: 3}}>
                         <Typography fontWeight={600} gutterBottom>
-                            Shop
+                            {t('Shop')}
                         </Typography>
 
-                        <FooterLink to="/shop">Clothing</FooterLink>
-                        <FooterLink to="/shop">Accessories</FooterLink>
-                        <FooterLink to="/shop">Footwear</FooterLink>
-                        <FooterLink to="/shop">Bags</FooterLink>
-                        <FooterLink to="/shop">Jewelry</FooterLink>
+                        <FooterLink to="/shop">{t('Clothing')}</FooterLink>
+                        <FooterLink to="/shop">{t('Accessories')}</FooterLink>
+                        <FooterLink to="/shop">{t('Footwear')}</FooterLink>
+                        <FooterLink to="/shop">{t('Bags')}</FooterLink>
+                        <FooterLink to="/shop">{t('Jewelry')}</FooterLink>
                         <FooterLink to="/shop">
-                            Sale
+                            {t('Sale')}
                         </FooterLink>
                     </Grid>
 
                     {/* Help */}
                     <Grid size={{ xs: 12, md: 3 }}>
-                        <Typography fontWeight={600} gutterBottom>
-                            Help
-                        </Typography>
-
-                        <FooterLink to="/">FAQ</FooterLink>
-                        <FooterLink to="/">Shipping & Returns</FooterLink>
-                        <FooterLink to="/">Size Guide</FooterLink>
-                        <FooterLink to="/">Contact Us</FooterLink>
-                        <FooterLink to="/">Track Order</FooterLink>
+                        {/* Help */}
+        <Typography fontWeight={600} gutterBottom>{t('Help')}</Typography>
+        <FooterLink to="/">{t('FAQ')}</FooterLink>
+        <FooterLink to="/">{t('Shipping & Returns')}</FooterLink>
+        <FooterLink to="/">{t('Size Guide')}</FooterLink>
+        <FooterLink to="/">{t('Contact Us')}</FooterLink>
+        <FooterLink to="/">{t('Track Order')}</FooterLink>
                     </Grid>
 
                     {/* About */}
                     <Grid size={{ xs: 12, md: 2 }}>
-                        <Typography fontWeight={600} gutterBottom>
-                            About
-                        </Typography>
-
-                        <FooterLink to="/">Our Story</FooterLink>
-                        <FooterLink to="/">Sustainability</FooterLink>
-                        <FooterLink to="/">Careers</FooterLink>
-                        <FooterLink to="/">Press</FooterLink>
+                        <Typography fontWeight={600} gutterBottom>{t('About')}</Typography>
+        <FooterLink to="/">{t('Our Story')}</FooterLink>
+        <FooterLink to="/">{t('Sustainability')}</FooterLink>
+        <FooterLink to="/">{t('Careers')}</FooterLink>
+        <FooterLink to="/">{t('Press')}</FooterLink>
                     </Grid>
 
                 </Grid>
@@ -127,8 +122,8 @@ export default function Footer() {
                 }}
             >
                 <Typography variant="body2" color="text.secondary">
-                    © {new Date().getFullYear()} KaShop. All rights reserved.
-                </Typography>
+            © {new Date().getFullYear()} KaShop. {t('All rights reserved.')}
+        </Typography>
             </Box>
         </Box>
     );

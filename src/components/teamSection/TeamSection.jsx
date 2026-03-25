@@ -11,30 +11,17 @@ import team3 from "../../assets/team3.jpg"
 import team4 from "../../assets/team4.jpg"
 
 
-const team = [
-  {
-    name: "Sarah Chen",
-    role: "Founder & CEO",
-    image: team1
-  },
-  {
-    name: "Marcus Williams",
-    role: "Creative Director",
-    image: team2
-  },
-  {
-    name: "Emily Rodriguez",
-    role: "Head of Design",
-    image: team3
-  },
-  {
-    name: "David Park",
-    role: "Operations Lead",
-    image: team4
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 export default function TeamSection() {
+  const { t } = useTranslation();
+
+  const team = [
+    { name: "Sarah Chen", role: t("Founder & CEO"), image: team1 },
+    { name: "Marcus Williams", role: t("Creative Director"), image: team2 },
+    { name: "Emily Rodriguez", role: t("Head of Design"), image: team3 },
+    { name: "David Park", role: t("Operations Lead"), image: team4 },
+  ];
   return (
     <Box sx={{ py: { xs: 6, md: 10 }, bgcolor: "#fff" }}>
       <Container maxWidth="lg" disableGutters>
@@ -42,10 +29,10 @@ export default function TeamSection() {
         {/* Heading */}
         <Box sx={{ textAlign: "center", mb: { xs: 5, md: 7 } }}>
           <Typography variant="h4" fontWeight={700} mb={1}>
-            Meet Our Team
+            {t('Meet Our Team')}
           </Typography>
           <Typography color="text.secondary">
-            The passionate people behind Luxe
+           {t('team_desc')}
           </Typography>
         </Box>
 

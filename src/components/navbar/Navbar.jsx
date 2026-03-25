@@ -1,11 +1,10 @@
 import {
     AppBar, Box, Toolbar, Typography, IconButton,
     Link, Badge, Menu, MenuItem, ListItemIcon, Divider,
-    Drawer, List, ListItemButton, ListItemText
+    Drawer, List, ListItemButton, ListItemText, Button
 } from '@mui/material';
 import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -15,6 +14,8 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { useAuthStore } from '../../store/useAuthStore';
 import useCart from '../../hooks/useCart';
+import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
@@ -22,9 +23,15 @@ export default function Navbar() {
     const token = useAuthStore((state) => state.token);
     const logout = useAuthStore((state) => state.logout);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { data: cartData } = useCart();
     const cartCount = cartData?.items?.length || 0;
+
+    const changeLanguage = () => {
+        const newLng = i18n.language === "ar" ? "en" : "ar";
+        i18n.changeLanguage(newLng);
+    };
 
     const handleUserClick = (e) => {
         token ? setAnchorEl(e.currentTarget) : navigate("/login");
@@ -61,15 +68,32 @@ export default function Navbar() {
 
                         {/* NAV LINKS */}
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3, alignItems: 'center' }}>
-                            <Link component={RouterLink} to={'/'} color="inherit" underline='none'>Home</Link>
-                            <Link component={RouterLink} to={'/shop'} color="inherit" underline='none'>Shop</Link>
-                            <Link component={RouterLink} to={'/about'} color="inherit" underline='none'>About</Link>
-                            <Link component={RouterLink} to={'/'} color="inherit" underline='none'>Contact</Link>
+                            <Link component={RouterLink} to={'/'} color="inherit" underline='none'>{t('Home')}</Link>
+                            <Link component={RouterLink} to={'/shop'} color="inherit" underline='none'>{t('Shop')}</Link>
+                            <Link component={RouterLink} to={'/about'} color="inherit" underline='none'>{t('About')}</Link>
+                            <Link component={RouterLink} to={'/'} color="inherit" underline='none'>{t('Contact')}</Link>
                         </Box>
 
                         {/* ICONS */}
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <IconButton size="small" sx={{ p: { xs: 0.5, md: 1 } }} color="inherit"><DarkModeOutlinedIcon /></IconButton>
+
+                            {/* LANGUAGE TOGGLE */}
+                            <Button
+                                onClick={changeLanguage}
+                                size="small"
+                                sx={{
+                                    minWidth: 40, fontWeight: 700, fontSize: 13,
+                                    color: "#c026d3", border: "1px solid #e879f9",
+                                    borderRadius: 2, px: 1.5, py: 0.5, mr: 0.5,
+                                    "&:hover": { bgcolor: "#fdf4ff" }
+                                }}
+                            >
+                                {i18n.language === "ar" ? "EN" : "AR"}
+                            </Button>
+
+                            <IconButton size="small" sx={{ p: { xs: 0.5, md: 1 } }} color="inherit">
+                                <DarkModeOutlinedIcon />
+                            </IconButton>
 
                             {/* USER */}
                             <IconButton size="small" sx={{ p: { xs: 0.5, md: 1 }, color: token ? "#c026d3" : "inherit" }} onClick={handleUserClick}>
@@ -85,7 +109,7 @@ export default function Navbar() {
                             >
                                 <MenuItem onClick={handleLogout} sx={{ color: "error.main", gap: 1 }}>
                                     <ListItemIcon><LogoutIcon fontSize="small" sx={{ color: "error.main" }} /></ListItemIcon>
-                                    Logout
+                                    {t('Login')}
                                 </MenuItem>
                             </Menu>
 
@@ -105,8 +129,8 @@ export default function Navbar() {
                             <Typography fontWeight={700} fontSize="1.2rem">KASHOP</Typography>
                         </Box>
                         <List>
-                            <ListItemButton component={RouterLink} to="/" onClick={() => setOpen(false)}><ListItemText primary="Home" /></ListItemButton>
-                            <ListItemButton component={RouterLink} to="/shop" onClick={() => setOpen(false)}><ListItemText primary="Shop" /></ListItemButton>
+                            <ListItemButton component={RouterLink} to="/" onClick={() => setOpen(false)}><ListItemText primary={t('Home')} /></ListItemButton>
+                            <ListItemButton component={RouterLink} to="/shop" onClick={() => setOpen(false)}><ListItemText primary={t('Products')} /></ListItemButton>
                             <ListItemButton component={RouterLink} to="/about" onClick={() => setOpen(false)}><ListItemText primary="About" /></ListItemButton>
                             <ListItemButton component={RouterLink} to="/" onClick={() => setOpen(false)}><ListItemText primary="Contact" /></ListItemButton>
                             {token && (
@@ -114,7 +138,7 @@ export default function Navbar() {
                                     <Divider sx={{ my: 1 }} />
                                     <ListItemButton onClick={handleLogout} sx={{ color: "error.main" }}>
                                         <ListItemIcon><LogoutIcon fontSize="small" sx={{ color: "error.main" }} /></ListItemIcon>
-                                        <ListItemText primary="Logout" />
+                                        <ListItemText primary={t('Logout')} />
                                     </ListItemButton>
                                 </>
                             )}

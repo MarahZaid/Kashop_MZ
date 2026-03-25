@@ -10,35 +10,35 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PublicIcon from "@mui/icons-material/Public";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
+import { useTranslation } from 'react-i18next';
 
-const values = [
-  {
-    title: "Quality First",
-    description:
-      "We source only the finest materials and work with skilled artisans to create products that last.",
-    icon: <FavoriteBorderIcon />,
-  },
-  {
-    title: "Sustainability",
-    description:
-      "Committed to ethical sourcing and eco-friendly practices throughout our supply chain.",
-    icon: <PublicIcon />,
-  },
-  {
-    title: "Community",
-    description:
-      "Building meaningful connections with our customers and giving back to communities in need.",
-    icon: <PeopleOutlineIcon />,
-  },
-  {
-    title: "Innovation",
-    description:
-      "Constantly evolving our designs and processes to bring you the best in modern fashion.",
-    icon: <AutoAwesomeOutlinedIcon />,
-  },
-];
+
 
 export default function ValuesSection() {
+  const { t } = useTranslation();
+
+  const values = [
+    {
+      title: t("Quality First"),
+      description: t("quality_first_desc"),
+      icon: <FavoriteBorderIcon />,
+    },
+    {
+      title: t("Sustainability"),
+      description: t("sustainability_desc"),
+      icon: <PublicIcon />,
+    },
+    {
+      title: t("Community"),
+      description: t("community_desc"),
+      icon: <PeopleOutlineIcon />,
+    },
+    {
+      title: t("Innovation"),
+      description: t("innovation_desc"),
+      icon: <AutoAwesomeOutlinedIcon />,
+    },
+  ];
   return (
     <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#fafafa" }}>
       <Container maxWidth="lg">
@@ -50,13 +50,13 @@ export default function ValuesSection() {
             fontWeight={700}
             mb={1}
           >
-            Our Values
+            {t('Our Values')}
           </Typography>
 
           <Typography
             color="text.secondary"
           >
-            The principles that guide everything we do
+            {t('values_desc')}
           </Typography>
         </Box>
 

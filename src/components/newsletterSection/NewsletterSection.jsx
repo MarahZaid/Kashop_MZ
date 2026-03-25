@@ -7,6 +7,7 @@ import {
     Button,
     Paper
 } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
@@ -15,6 +16,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import FeatureCard from "../../ui/FeatureCard";
 
 export default function NewsletterSection() {
+    const { t } = useTranslation();
     return (
         <Box
   sx={{
@@ -33,7 +35,7 @@ export default function NewsletterSection() {
                     {/* LEFT SIDE */}
                     <Grid size={{ xs: 12, md: 6 }}>
                         <Typography variant="h4" fontWeight={700} gutterBottom>
-                            Get 20% Off Your First Order
+                            {t('newsletter_title')}
                         </Typography>
 
                         <Typography
@@ -43,8 +45,7 @@ export default function NewsletterSection() {
                                 maxWidth: 500
                             }}
                         >
-                            Sign up for our newsletter and receive exclusive offers,
-                            early access to new collections, and style inspiration.
+                            {t('newsletter_desc')}
                         </Typography>
 
                         {/* INPUT */}
@@ -57,7 +58,7 @@ export default function NewsletterSection() {
                         >
                             <TextField
                                 fullWidth
-                                placeholder="Enter your email"
+                                placeholder={t('Enter your email')}
                                 variant="outlined"
                                 sx={{
                                     input: { color: "white" },
@@ -75,7 +76,7 @@ export default function NewsletterSection() {
                                         "linear-gradient(90deg,#a855f7,#ec4899)"
                                 }}
                             >
-                                Subscribe
+                                {t('Subscribe')}
                             </Button>
                         </Box>
 
@@ -86,7 +87,7 @@ export default function NewsletterSection() {
                                 color: "rgba(255,255,255,0.5)"
                             }}
                         >
-                            By subscribing, you agree to our Privacy Policy and consent to receive updates.
+                            {t('newsletter_privacy')}
                         </Typography>
                     </Grid>
 
@@ -97,8 +98,7 @@ export default function NewsletterSection() {
                             <Grid size={{ xs: 12, sm: 6 }}>
                                 <FeatureCard
                                     icon={<CardGiftcardOutlinedIcon />}
-                                    title="Exclusive Offers"
-                                    text="Get member-only discounts and early access to sales"
+                                    title={t('Exclusive Offers')} text={t('exclusive_offers_desc')}
                                     color="#c084fc"
                                 />
                             </Grid>
@@ -106,8 +106,7 @@ export default function NewsletterSection() {
                             <Grid size={{ xs: 12, sm: 6 }}>
                                 <FeatureCard
                                     icon={<AutoAwesomeOutlinedIcon />}
-                                    title="New Arrivals First"
-                                    text="Be the first to know about new collections"
+                                    title={t('New Arrivals First')} text={t('new_arrivals_desc')}
                                     color="#fb923c"
                                 />
                             </Grid>
@@ -115,8 +114,7 @@ export default function NewsletterSection() {
                             <Grid size={{ xs: 12, sm: 6 }}>
                                 <FeatureCard
                                     icon={<CheckCircleOutlineOutlinedIcon />}
-                                    title="Free Returns"
-                                    text="Extended 60-day returns for subscribers"
+                                    title={t('Free Returns')} text={t('free_returns_desc')}
                                     color="#10b981"
                                 />
                             </Grid>
@@ -124,8 +122,7 @@ export default function NewsletterSection() {
                             <Grid size={{ xs: 12, sm: 6 }}>
                                 <FeatureCard
                                     icon={<FavoriteBorderOutlinedIcon />}
-                                    title="Style Tips"
-                                    text="Curated looks and styling inspiration"
+                                    title={t('Style Tips')} text={t('style_tips_desc')}
                                     color="#60a5fa"
                                 />
                             </Grid>

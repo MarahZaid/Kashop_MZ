@@ -2,8 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from '../api/axiosInstance';
+import { useTranslation } from 'react-i18next';
 
 export default function useProducts(params = {}) {
+    const { i18n } = useTranslation();
     const {
         limit = 10,
         page = 1,
@@ -34,7 +36,7 @@ export default function useProducts(params = {}) {
     };
 
     return useQuery({
-        queryKey: ["products", page, limit, category, minPrice, maxPrice, sortBy, ascending, search],
+        queryKey: ["products",i18n.language, page, limit, category, minPrice, maxPrice, sortBy, ascending, search],
         queryFn: getProducts,
         staleTime: 1000 * 60 * 5,
         keepPreviousData: true,

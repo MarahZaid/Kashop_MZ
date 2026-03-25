@@ -6,12 +6,16 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import useProduct from "../../hooks/useProduct";
+import { useTranslation } from 'react-i18next';
 
 export default function CartItem({ item, onRemove, onUpdate, isRemoving, isUpdating }) {
+    const { t } = useTranslation();
     const { data } = useProduct(item.productId);
     const image = data?.response?.image;
+    const productName = data?.response?.name || item.productName;
 
     return (
+        
         <Paper
             elevation={0}
             sx={{
@@ -39,10 +43,10 @@ export default function CartItem({ item, onRemove, onUpdate, isRemoving, isUpdat
 
             {/* INFO */}
             <Box sx={{ flex: 1 }}>
-                <Typography fontWeight={700} fontSize={15}>{item.productName}</Typography>
+                <Typography fontWeight={700} fontSize={15}>{productName}</Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                    ${item.price} each
-                </Typography>
+            ${item.price} {t('each')}
+        </Typography>
 
                 {/* QUANTITY */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1.5 }}>

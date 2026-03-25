@@ -9,8 +9,10 @@ import {
 } from "@mui/material";
 
 import TestimonialCard from "../../ui/TestimonialCard";
+import { useTranslation } from 'react-i18next';
 
 export default function TestimonialsSection() {
+  const { t } = useTranslation();
   return (
     <Box sx={{ py: 10, background: "#f9fafb" }}>
       <Container maxWidth="lg">
@@ -18,11 +20,11 @@ export default function TestimonialsSection() {
         {/* TITLE */}
         <Box textAlign="center" mb={8}>
           <Typography variant="h4" fontWeight={700} gutterBottom>
-            What Our Customers Say
+            {t('What Our Customers Say')}
           </Typography>
 
           <Typography color="text.secondary">
-            Join thousands of satisfied customers who love shopping with us
+            {t('testimonials_desc')}
           </Typography>
         </Box>
 
@@ -31,7 +33,7 @@ export default function TestimonialsSection() {
           
           <Grid item size={{xs:12, md:4}}>
             <TestimonialCard
-              text={`"Luxe has become my go-to for quality basics and statement pieces. The attention to detail and customer service is unmatched."`}
+              text={t('testimonial_1')}
               name="Alexandra Chen"
               city="Los Angeles, CA"
               img=""
@@ -40,7 +42,7 @@ export default function TestimonialsSection() {
 
           <Grid item  size={{xs:12, md:4}}>
             <TestimonialCard
-              text={`"Finally found a brand that balances quality, style, and sustainability. Every purchase has exceeded my expectations."`}
+              text={t('testimonial_2')}
               name="Marcus Johnson"
               city="Chicago, IL"
               img=""
@@ -49,7 +51,7 @@ export default function TestimonialsSection() {
 
           <Grid item  size={{xs:12, md:4}}>
             <TestimonialCard
-              text={`"The cashmere sweater is hands down the softest thing I own. Worth the investment for pieces that last.  Exceeded my expectations."`}
+              text={t('testimonial_3')}
               name="Sophie Williams"
               city="Miami, FL"
               img=""
@@ -71,15 +73,15 @@ export default function TestimonialsSection() {
           }}
         >
           <Typography color="text.secondary">
-            Trustpilot
+            {t('Trustpilot')}
           </Typography>
 
           <Typography color="text.secondary">
-            SSL Secured
+            {t('SSL Secured')}
           </Typography>
 
           <Typography color="text.secondary">
-            Verified Reviews
+            {t('Verified Reviews')}
           </Typography>
         </Box>
 

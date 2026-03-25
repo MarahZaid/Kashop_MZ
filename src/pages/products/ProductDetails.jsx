@@ -11,8 +11,10 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Loader from "../../ui/loader/Loader";
 import { useState } from "react";
 import useAddToCart from "../../hooks/useAddToCart";
+import { useTranslation } from 'react-i18next';
 
 export default function ProductDetails() {
+    const { t } = useTranslation();
     const { id } = useParams();
     const { data, isLoading, isError, error } = useProduct(id);
     const [quantity, setQuantity] = useState(1);
@@ -47,7 +49,7 @@ export default function ProductDetails() {
                     <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
                         <Rating value={product.rate || 0} readOnly precision={0.5} />
                         <Typography variant="body2" color="text.secondary">
-                            ({product.reviews?.length || 0} reviews)
+                            ({product.reviews?.length || 0} {t('reviews')})
                         </Typography>
                     </Stack>
 
@@ -56,7 +58,7 @@ export default function ProductDetails() {
                     </Typography>
 
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 4, lineHeight: 1.5 }}>
-                        {product.description || "High quality product from our premium collection."}
+                        {product.description || t('default_product_desc')}
                     </Typography>
 
                     <Divider sx={{ mb: 4 }} />
@@ -102,7 +104,7 @@ export default function ProductDetails() {
                                     Count: quantity
                                 })}
                             >
-                                Add to Cart
+                                {t('Add to Cart')}
                             </Button>
                         </Grid>
 
@@ -125,7 +127,7 @@ export default function ProductDetails() {
 
             <Box sx={{ mt: 5 }}>
                 <Typography variant="h5" fontWeight="bold" sx={{ mb: 4 }}>
-                    Customer Reviews ({product.reviews?.length || 0})
+                      {t('Customer Reviews')} ({product.reviews?.length || 0})
                 </Typography>
 
                 <Divider sx={{ mb: 4 }} />
@@ -157,7 +159,7 @@ export default function ProductDetails() {
                         ))
                     ) : (
                         <Grid item size={{ xs: 12 }}>
-                            <Typography color="text.secondary">No reviews yet for this product.</Typography>
+                            <Typography color="text.secondary">{t('No reviews yet')}</Typography>
                         </Grid>
                     )}
                 </Grid>

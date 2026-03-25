@@ -9,10 +9,13 @@ import {
 import Loader from "../../ui/loader/Loader";
 import ProductCard from "../../ui/product/ProductCard";
 import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 export default function Products() {
-
+    const { t } = useTranslation();
     const { data, isLoading, isError, error } = useProducts(4);
+
+    
 
     if (isLoading) return <Loader />;
     if (isError) return <Box color="red">{error.message}</Box>;
@@ -39,11 +42,11 @@ export default function Products() {
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                         }}>
-                            Featured Products
+                            {t('Featured Products')}
                         </Typography>
 
                         <Typography color="black">
-                            Discover our handpicked selection of trending items
+                            {t('featured_products_desc')}
                         </Typography>
                     </Box>
 
@@ -59,7 +62,7 @@ export default function Products() {
                             borderRadius: 2
                         }}
                     >
-                        View All Products →
+                        {t('View All Products')} →
                     </Link>
                 </Box>
 

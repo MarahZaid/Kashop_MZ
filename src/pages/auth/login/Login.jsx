@@ -13,9 +13,11 @@ import { loginSchema } from "../../../validation/LoginSchema";
 import { GlassTextField } from "./../../../ui/GlassTextField";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../store/useAuthStore";
+import { useTranslation } from 'react-i18next';
 
 
 export default function Login() {
+   const { t } = useTranslation();
 
   const setToken = useAuthStore((state)=>state.setToken);
   const navigate = useNavigate();
@@ -114,7 +116,7 @@ export default function Login() {
         </Typography>
 
         <Typography textAlign="center" mb={4} color="gray">
-          Login to your account
+          {t('Login to your account')}
         </Typography>
 
         {/* FORM */}
@@ -127,14 +129,14 @@ export default function Login() {
         >
           <GlassTextField
             {...register("email")}
-            label="Email"
+            label={t('Email')}
             error={!!errors.email}
             helperText={errors.email?.message}
           />
 
           <GlassTextField
             {...register("password")}
-            label="Password"
+            label={t('Password')}
             type="password"
             error={!!errors.password}
             helperText={errors.password?.message}
@@ -156,7 +158,7 @@ export default function Login() {
               },
             }}
           >
-            Login
+            {t('Login')}
           </Button>
         </Box>
 
@@ -169,7 +171,7 @@ export default function Login() {
             fontSize: "14px",
           }}
         >
-          Don’t have an account?
+          {t("Don't have an account?")}
           <Link
             component={RouterLink}
             to="/register"
@@ -185,7 +187,7 @@ export default function Login() {
               },
             }}
           >
-            Register
+            {t('Register')}
           </Link>
         </Typography>
       </Paper>
