@@ -8,17 +8,18 @@ import ProductDetails from "./pages/products/ProductDetails.jsx";
 import Shop from "./pages/shop/Shop.jsx";
 import ProtectedRouter from "./ProtectedRouter.jsx";
 import About from "./pages/about/About.jsx";
-
-
+import Profile from "./pages/profile/Profile.jsx";
+import ProfileInfo from "./pages/profile/ProfileInfo.jsx";
+import ProfileOrders from "./pages/profile/ProfileOrders.jsx";
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: 
-    
+    element:
+
       <MainLayout />
-,
+    ,
     children: [
       {
         index: true,
@@ -27,15 +28,15 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element:
-        <ProtectedRouter>
-          <Cart />
-       </ProtectedRouter>
-            
-         
+          <ProtectedRouter>
+            <Cart />
+          </ProtectedRouter>
+
+
       },
       {
         path: '/products/:id',
-        element: <ProductDetails/>
+        element: <ProductDetails />
       },
       {
         path: '/login',
@@ -52,6 +53,24 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />
+      },
+      {
+        path: '/profile',
+        element:
+          <ProtectedRouter>
+            <Profile />
+          </ProtectedRouter>,
+        children:[
+          {
+            index: true,
+            element: <ProfileInfo />
+
+          },
+          {
+            path: 'orders',
+            element: <ProfileOrders />
+          }
+        ]
       }
     ]
   }

@@ -9,8 +9,9 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import siteIcon from '../../assets/siteIcon.png';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { useState } from "react";
 import { useAuthStore } from '../../store/useAuthStore';
 import useCart from '../../hooks/useCart';
@@ -23,6 +24,7 @@ export default function Navbar() {
     const token = useAuthStore((state) => state.token);
     const logout = useAuthStore((state) => state.logout);
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useTranslation();
 
     const { data: cartData } = useCart();
@@ -42,6 +44,25 @@ export default function Navbar() {
         setAnchorEl(null);
         navigate("/login");
     };
+
+    const navLinkSx = (path) => ({
+        color: location.pathname === path ? "#c026d3" : "inherit",
+        fontWeight: location.pathname === path ? 700 : 400,
+        position: "relative",
+        textDecoration: "none",
+        "&::after": {
+            content: '""',
+            position: "absolute",
+            bottom: -4, left: 0,
+            width: location.pathname === path ? "100%" : "0%",
+            height: "2px",
+            background: "linear-gradient(90deg, #c026d3, #a855f7)",
+            borderRadius: 4,
+            transition: "width 0.25s ease",
+        },
+        "&:hover::after": { width: "100%" },
+        "&:hover": { color: "#c026d3" },
+    });
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -68,10 +89,10 @@ export default function Navbar() {
 
                         {/* NAV LINKS */}
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3, alignItems: 'center' }}>
-                            <Link component={RouterLink} to={'/'} color="inherit" underline='none'>{t('Home')}</Link>
-                            <Link component={RouterLink} to={'/shop'} color="inherit" underline='none'>{t('Shop')}</Link>
-                            <Link component={RouterLink} to={'/about'} color="inherit" underline='none'>{t('About')}</Link>
-                            <Link component={RouterLink} to={'/'} color="inherit" underline='none'>{t('Contact')}</Link>
+                            <Link component={RouterLink} to={'/'} sx={navLinkSx('/')} underline='none'>{t('Home')}</Link>
+                            <Link component={RouterLink} to={'/shop'} sx={navLinkSx('/shop')} underline='none'>{t('Shop')}</Link>
+                            <Link component={RouterLink} to={'/about'} sx={navLinkSx('/about')} underline='none'>{t('About')}</Link>
+                            <Link component={RouterLink} to={'/contact'} sx={navLinkSx('/contact')} underline='none'>{t('Contact')}</Link>
                         </Box>
 
                         {/* ICONS */}
@@ -107,9 +128,25 @@ export default function Navbar() {
                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                 PaperProps={{ sx: { mt: 1, minWidth: 160, borderRadius: 3 } }}
                             >
+                                {/* PROFILE */}
+                                <MenuItem
+                                    component={RouterLink}
+                                    to="/profile"
+                                    onClick={() => setAnchorEl(null)}
+                                    sx={{ gap: 1 }}
+                                >
+                                    <ListItemIcon>
+                                        <AccountCircleOutlinedIcon fontSize="small" sx={{ color: "#c026d3" }} />
+                                    </ListItemIcon>
+                                    {t('Profile')}
+                                </MenuItem>
+
+                                <Divider />
+
+                                {/* LOGOUT */}
                                 <MenuItem onClick={handleLogout} sx={{ color: "error.main", gap: 1 }}>
                                     <ListItemIcon><LogoutIcon fontSize="small" sx={{ color: "error.main" }} /></ListItemIcon>
-                                    {t('Login')}
+                                    {t('Logout')}
                                 </MenuItem>
                             </Menu>
 
@@ -129,13 +166,19 @@ export default function Navbar() {
                             <Typography fontWeight={700} fontSize="1.2rem">KASHOP</Typography>
                         </Box>
                         <List>
-                            <ListItemButton component={RouterLink} to="/" onClick={() => setOpen(false)}><ListItemText primary={t('Home')} /></ListItemButton>
-                            <ListItemButton component={RouterLink} to="/shop" onClick={() => setOpen(false)}><ListItemText primary={t('Products')} /></ListItemButton>
-                            <ListItemButton component={RouterLink} to="/about" onClick={() => setOpen(false)}><ListItemText primary="About" /></ListItemButton>
-                            <ListItemButton component={RouterLink} to="/" onClick={() => setOpen(false)}><ListItemText primary="Contact" /></ListItemButton>
+                            <ListItemButton component={RouterLink} to="/" onClick={() => setOpen(false)} selected={location.pathname === '/'}><ListItemText primary={t('Home')} /></ListItemButton>
+                            <ListItemButton component={RouterLink} to="/shop" onClick={() => setOpen(false)} selected={location.pathname === '/shop'}><ListItemText primary={t('Products')} /></ListItemButton>
+                            <ListItemButton component={RouterLink} to="/about" onClick={() => setOpen(false)} selected={location.pathname === '/about'}><ListItemText primary="About" /></ListItemButton>
+                            <ListItemButton component={RouterLink} to="/contact" onClick={() => setOpen(false)} selected={location.pathname === '/contact'}><ListItemText primary="Contact" /></ListItemButton>
                             {token && (
                                 <>
                                     <Divider sx={{ my: 1 }} />
+                                    {/* PROFILE */}
+                                    <ListItemButton component={RouterLink} to="/profile" onClick={() => setOpen(false)}>
+                                        <ListItemIcon><AccountCircleOutlinedIcon fontSize="small" sx={{ color: "#c026d3" }} /></ListItemIcon>
+                                        <ListItemText primary={t('Profile')} />
+                                    </ListItemButton>
+                                    {/* LOGOUT */}
                                     <ListItemButton onClick={handleLogout} sx={{ color: "error.main" }}>
                                         <ListItemIcon><LogoutIcon fontSize="small" sx={{ color: "error.main" }} /></ListItemIcon>
                                         <ListItemText primary={t('Logout')} />
