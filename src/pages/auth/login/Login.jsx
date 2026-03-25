@@ -14,6 +14,7 @@ import { GlassTextField } from "./../../../ui/GlassTextField";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useTranslation } from 'react-i18next';
+import axiosInstance from "../../../api/axiosInstance";
 
 
 export default function Login() {
@@ -31,8 +32,8 @@ export default function Login() {
 
   const loginForm = async (values) => {
     try {
-      const response = await axios.post(
-        "https://knowledgeshop.runasp.net/api/auth/Account/Login",
+      const response = await axiosInstance.post(
+        "auth/Account/Login",
         values
       );
       if (response.status === 200){

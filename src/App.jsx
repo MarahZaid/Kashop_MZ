@@ -8,6 +8,9 @@ import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
 import rtlPlugin from 'stylis-plugin-rtl'
 import { prefixer } from 'stylis'
+import theme from './theme.js'
+import CssBaseline from '@mui/material/CssBaseline'
+import {ThemeProvider} from '@emotion/react'
 
 const ltrCache = createCache({ key: 'muiltr' });
 const rtlCache = createCache({
@@ -28,7 +31,10 @@ export default function App() {
     return (
         <CacheProvider value={isRtl ? rtlCache : ltrCache}>
             <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <RouterProvider router={router} />
+                </ThemeProvider>
             </QueryClientProvider>
         </CacheProvider>
     )
