@@ -83,10 +83,10 @@ export default function Shop() {
 
     const { data: categoriesData } = useCategories();
     const categories = categoriesData?.response?.data || [];
-    
+
     const products = selectedCategory
-        ? (Array.isArray(data?.response) ? data.response : [])  
-        : (data?.response?.data || []);                          
+        ? (Array.isArray(data?.response) ? data.response : [])
+        : (data?.response?.data || []);
 
     const totalPages = selectedCategory ? 1 : (data?.response?.totalPages || 1);
 
@@ -113,7 +113,7 @@ export default function Shop() {
     };
 
     return (
-        <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh", pb: 10 }}>
+        <Box sx={{ bgcolor: "background.default", minHeight: "100vh", pb: 10 }}>
 
             {/* PAGE HEADER */}
             <Box
@@ -154,12 +154,18 @@ export default function Shop() {
 
                     {/* ────── SIDEBAR ────── */}
                     <Grid item size={{ xs: 12, md: 3 }}>
-                        <Paper elevation={0} sx={{ borderRadius: 3, border: "1px solid #e2e8f0", overflow: "hidden", position: "sticky", top: 20 }}>
+                        <Paper elevation={0} sx={{
+                            borderRadius: 3,
+                            border: "1px solid",
+                            borderColor: "divider",
+                            overflow: "hidden", position: "sticky", top: 20
+                        }}>
 
                             {/* Sidebar Header */}
                             <Box sx={{
                                 p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center",
-                                borderBottom: "1px solid #e2e8f0"
+                                border: "1px solid",
+                                borderColor: "divider",
                             }}>
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                     <FilterListIcon sx={{ color: "#c026d3" }} />
@@ -177,7 +183,7 @@ export default function Shop() {
                                         size="small"
                                         onClick={handleClearFilters}
                                         startIcon={<CloseIcon fontSize="small" />}
-                                        sx={{ color: "#64748b", textTransform: "none", fontSize: 12 }}
+                                        sx={{ color: "text.secondary", textTransform: "none", fontSize: 12 }}
                                     >
                                         {t('Clear all')}
                                     </Button>
@@ -185,7 +191,10 @@ export default function Shop() {
                             </Box>
 
                             {/* Search */}
-                            <Box sx={{ p: 2.5, borderBottom: "1px solid #e2e8f0" }}>
+                            <Box sx={{
+                                p: 2.5, border: "1px solid",
+                                borderColor: "divider"
+                            }}>
                                 <TextField
                                     fullWidth
                                     size="small"
@@ -211,7 +220,8 @@ export default function Shop() {
                             </Box>
 
                             {/* Categories */}
-                            <Box sx={{ borderBottom: "1px solid #e2e8f0" }}>
+                            <Box sx={{ border: "1px solid",
+    borderColor: "divider" }}>
                                 <Box
                                     onClick={() => setOpenCategories(!openCategories)}
                                     sx={{ p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
@@ -226,7 +236,10 @@ export default function Shop() {
                                             onClick={() => handleCategoryClick("")}
                                             sx={{
                                                 borderRadius: 2, mb: 0.5,
-                                                "&.Mui-selected": { bgcolor: "#fdf4ff", color: "#c026d3" },
+                                                "&.Mui-selected": {
+                                                    bgcolor: (theme) => theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff",
+                                                    color: "#c026d3"
+                                                },
                                                 "&.Mui-selected:hover": { bgcolor: "#fdf4ff" },
                                             }}
                                         >
@@ -254,7 +267,8 @@ export default function Shop() {
                             </Box>
 
                             {/* Price Range */}
-                            <Box sx={{ borderBottom: "1px solid #e2e8f0" }}>
+                            <Box sx={{ border: "1px solid",
+    borderColor: "divider"}}>
                                 <Box
                                     onClick={() => setOpenPrice(!openPrice)}
                                     sx={{ p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
@@ -286,7 +300,8 @@ export default function Shop() {
                             </Box>
 
                             {/* Sort */}
-                            <Box sx={{ borderBottom: "1px solid #e2e8f0" }}>
+                            <Box sx={{border: "1px solid",
+    borderColor: "divider" }}>
                                 <Box
                                     onClick={() => setOpenSort(!openSort)}
                                     sx={{ p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}
@@ -358,10 +373,15 @@ export default function Shop() {
                             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                                 {selectedCategory && (
                                     <Chip
-                                        label={`${t('Category')}: ${selectedCategory}`} 
+                                        label={`${t('Category')}: ${selectedCategory}`}
                                         size="small"
                                         onDelete={() => { setSelectedCategory(""); setPage(1); }}
-                                        sx={{ bgcolor: "#fdf4ff", color: "#c026d3", border: "1px solid #e879f9" }}
+                                        sx={{
+                                            bgcolor: (theme) => theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff",
+                                            color: "#c026d3",
+                                            border: "1px solid #e879f9"
+                                        }}
+
                                     />
                                 )}
                                 {(appliedPrice[0] > 0 || appliedPrice[1] < 5000) && (
@@ -369,7 +389,11 @@ export default function Shop() {
                                         label={`$${appliedPrice[0]} – $${appliedPrice[1]}`}
                                         size="small"
                                         onDelete={() => { setAppliedPrice([0, 5000]); setPriceRange([0, 5000]); setPage(1); }}
-                                        sx={{ bgcolor: "#fdf4ff", color: "#c026d3", border: "1px solid #e879f9" }}
+                                        sx={{
+                                            bgcolor: (theme) => theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff",
+                                            color: "#c026d3",
+                                            border: "1px solid #e879f9"
+                                        }}
                                     />
                                 )}
                                 {search && (
@@ -377,7 +401,11 @@ export default function Shop() {
                                         label={`"${search}"`}
                                         size="small"
                                         onDelete={() => { setSearch(""); setSearchInput(""); setPage(1); }}
-                                        sx={{ bgcolor: "#fdf4ff", color: "#c026d3", border: "1px solid #e879f9" }}
+                                        sx={{
+                                            bgcolor: (theme) => theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff",
+                                            color: "#c026d3",
+                                            border: "1px solid #e879f9"
+                                        }}
                                     />
                                 )}
                             </Box>
@@ -394,7 +422,7 @@ export default function Shop() {
                         <Grid container spacing={2.5}>
                             {isLoading
                                 ? Array.from({ length: 8 }).map((_, i) => (
-                                    <Grid item size={{ xs: 12, sm:6, lg: 4 }} key={i}>
+                                    <Grid item size={{ xs: 12, sm: 6, lg: 4 }} key={i}>
                                         <Skeleton variant="rounded" height={380} sx={{ borderRadius: 3 }} />
                                     </Grid>
                                 ))

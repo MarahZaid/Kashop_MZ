@@ -16,7 +16,9 @@ export default function TestimonialCard({ text, name, city, img }) {
       sx={{
         p: 4,
         borderRadius: 4,
-        border: "1px solid #e5e7eb",
+       // Paper
+border: "1px solid",
+borderColor: "divider", 
         height: "100%"
       }}
     >
@@ -28,7 +30,7 @@ export default function TestimonialCard({ text, name, city, img }) {
       </Box>
 
       {/* TEXT */}
-      <Typography sx={{ mb: 3, color: "#374151" }}>
+      <Typography sx={{ mb: 3, color: "text.primary",  }}>
         {text}
       </Typography>
 
@@ -51,10 +53,9 @@ export default function TestimonialCard({ text, name, city, img }) {
           label="Verified"
           size="small"
           sx={{
-            background: "#dcfce7",
-            color: "#15803d",
-            fontWeight: 500
-          }}
+    backgroundColor: (theme) => theme.palette.mode === "dark" ? "#14532d" : "#dcfce7",  // ✅
+    color: (theme) => theme.palette.mode === "dark" ? "#86efac" : "#15803d",            // ✅
+}}
         />
 
       </Box>

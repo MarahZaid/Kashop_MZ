@@ -15,16 +15,17 @@ export default function Products() {
     const { t } = useTranslation();
     const { data, isLoading, isError, error } = useProducts(4);
 
-    
+
 
     if (isLoading) return <Loader />;
     if (isError) return <Box color="red">{error.message}</Box>;
 
     return (
         <Box sx={{
-            py: 10, color: "white",
-            background: "white"}}
-        >
+            py: 10,
+            backgroundColor: "background.default",
+            color: "text.primary"
+        }}>
             <Container maxWidth="lg">
 
                 {/* HEADER */}
@@ -45,7 +46,7 @@ export default function Products() {
                             {t('Featured Products')}
                         </Typography>
 
-                        <Typography color="black">
+                        <Typography color="text.secondary">
                             {t('featured_products_desc')}
                         </Typography>
                     </Box>
@@ -78,7 +79,7 @@ export default function Products() {
                                 color="inherit"
                                 sx={{ display: "block" }}
                             >
-                                <ProductCard product={product}  />
+                                <ProductCard product={product} />
                             </Link>
 
                         </Grid>

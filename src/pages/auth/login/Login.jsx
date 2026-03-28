@@ -3,10 +3,12 @@ import {
   Button,
   Typography,
   Paper,
-  Link
+  Link,
+  IconButton
 } from "@mui/material";
+import { useState } from "react";
 
-import axios from "axios";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../../validation/LoginSchema";
@@ -15,36 +17,68 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../store/useAuthStore";
 import { useTranslation } from 'react-i18next';
 import axiosInstance from "../../../api/axiosInstance";
+import useForgotPassword from "../../../hooks/useForgotPassword";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 
 export default function Login() {
-   const { t } = useTranslation();
+  const { t } = useTranslation();
 
-  const setToken = useAuthStore((state)=>state.setToken);
+  const setToken = useAuthStore((state) => state.setToken);
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(loginSchema), mode:'onBlur'
+    resolver: yupResolver(loginSchema), mode: 'onBlur'
   });
 
+  const [loginError, setLoginError] = useState('');
+
   const loginForm = async (values) => {
+    setLoginError('');
     try {
-      const response = await axiosInstance.post(
-        "auth/Account/Login",
-        values
-      );
-      if (response.status === 200){
+      const response = await axiosInstance.post("auth/Account/Login", values);
+      if (response.status === 200) {
         setToken(response.data.accessToken);
         navigate('/');
       }
-      console.log(response);
     } catch (error) {
-      console.log(error);
+      const message = error.response?.data?.message;
+      if (message === "Account is locked , try again Later") {
+        setLoginError(t('account_locked'));
+      } else {
+        setLoginError(t('invalid_credentials'));
+      }
     }
   };
+
+  const { sendCode, resetPassword } = useForgotPassword();
+  const [forgotStep, setForgotStep] = useState(null); // null | 'email' | 'reset' | 'success'
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [forgotError, setForgotError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSendCode = async () => {
+    setForgotError('');
+    sendCode.mutate({ email: forgotEmail }, {
+      onSuccess: () => setForgotStep('reset'),
+      onError: () => setForgotError(t('email_not_found'))
+    });
+  };
+
+  const handleResetPassword = async () => {
+    setForgotError('');
+    resetPassword.mutate({ email: forgotEmail, code, newPassword }, {
+      onSuccess: () => setForgotStep('success'),
+      onError: () => setForgotError(t('invalid_code'))
+    });
+  };
+
 
   return (
     <Box
@@ -138,9 +172,20 @@ export default function Login() {
           <GlassTextField
             {...register("password")}
             label={t('Password')}
-            type="password"
+            type={showPassword ? "text" : "password"}
             error={!!errors.password}
             helperText={errors.password?.message}
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  onClick={() => setShowPassword(p => !p)}
+                  edge="end"
+                  sx={{ color: 'rgba(255,255,255,0.6)' }}
+                >
+                  {showPassword ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}
+                </IconButton>
+              )
+            }}
           />
 
           <Button
@@ -161,6 +206,18 @@ export default function Login() {
           >
             {t('Login')}
           </Button>
+          {loginError && (
+            <Box sx={{
+              mt: 1, p: 1.5, borderRadius: 2,
+              background: 'rgba(248, 113, 113, 0.15)',
+              border: '1px solid rgba(248, 113, 113, 0.3)',
+              textAlign: 'center'
+            }}>
+              <Typography fontSize={13} color="#f87171">
+                {loginError}
+              </Typography>
+            </Box>
+          )}
         </Box>
 
         {/* Register link */}
@@ -191,6 +248,120 @@ export default function Login() {
             {t('Register')}
           </Link>
         </Typography>
+        {/* Forgot Password Link */}
+        {!forgotStep && (
+          <Typography
+            onClick={() => setForgotStep('email')}
+            sx={{
+              mt: 1, textAlign: 'center', fontSize: 13,
+              color: "#a855f7", cursor: 'pointer',
+              '&:hover': { textDecoration: 'underline' }
+            }}
+          >
+            {t('Forgot Password?')}
+          </Typography>
+        )}
+
+        {/* STEP 1: Enter Email */}
+        {forgotStep === 'email' && (
+          <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography fontWeight={600} color="white" fontSize={15}>
+              {t('Enter your email to receive a code')}
+            </Typography>
+            <GlassTextField
+              label={t('Email')}
+              value={forgotEmail}
+              onChange={(e) => setForgotEmail(e.target.value)}
+            />
+            {forgotError && (
+              <Typography fontSize={13} color="#f87171">{forgotError}</Typography>
+            )}
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Button
+                fullWidth variant="outlined"
+                onClick={() => { setForgotStep(null); setForgotError(''); }}
+                sx={{ borderColor: 'rgba(255,255,255,0.2)', color: 'white', borderRadius: 2 }}
+              >
+                {t('Cancel')}
+              </Button>
+              <Button
+                fullWidth
+                disabled={sendCode.isPending || !forgotEmail}
+                onClick={handleSendCode}
+                sx={{
+                  borderRadius: 2, fontWeight: 'bold', color: 'white',
+                  background: 'linear-gradient(45deg,#a855f7,#ec4899)',
+                  '&:hover': { opacity: 0.9 }
+                }}
+              >
+                {sendCode.isPending ? t('Sending...') : t('Send Code')}
+              </Button>
+            </Box>
+          </Box>
+        )}
+
+        {/* STEP 2: Enter Code + New Password */}
+        {forgotStep === 'reset' && (
+          <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography fontWeight={600} color="white" fontSize={15}>
+              {t('Enter the code sent to your email')}
+            </Typography>
+            <GlassTextField
+              label={t('Code')}
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            />
+            <GlassTextField
+              label={t('New Password')}
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            {forgotError && (
+              <Typography fontSize={13} color="#f87171">{forgotError}</Typography>
+            )}
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Button
+                fullWidth variant="outlined"
+                onClick={() => { setForgotStep(null); setForgotError(''); }}
+                sx={{ borderColor: 'rgba(255,255,255,0.2)', color: 'white', borderRadius: 2 }}
+              >
+                {t('Cancel')}
+              </Button>
+              <Button
+                fullWidth
+                disabled={resetPassword.isPending || !code || !newPassword}
+                onClick={handleResetPassword}
+                sx={{
+                  borderRadius: 2, fontWeight: 'bold', color: 'white',
+                  background: 'linear-gradient(45deg,#a855f7,#ec4899)',
+                  '&:hover': { opacity: 0.9 }
+                }}
+              >
+                {resetPassword.isPending ? t('Resetting...') : t('Reset Password')}
+              </Button>
+            </Box>
+          </Box>
+        )}
+
+        {/* STEP 3: Success */}
+        {forgotStep === 'success' && (
+          <Box sx={{ mt: 3, textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography fontSize={40}>✓</Typography>
+            <Typography fontWeight={700} color="white">{t('Password reset successfully!')}</Typography>
+            <Button
+              fullWidth
+              onClick={() => setForgotStep(null)}
+              sx={{
+                borderRadius: 2, fontWeight: 'bold', color: 'white',
+                background: 'linear-gradient(45deg,#a855f7,#ec4899)',
+                '&:hover': { opacity: 0.9 }
+              }}
+            >
+              {t('Back to Login')}
+            </Button>
+          </Box>
+        )}
       </Paper>
     </Box>
   );

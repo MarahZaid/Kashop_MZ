@@ -15,13 +15,15 @@ export default function CartItem({ item, onRemove, onUpdate, isRemoving, isUpdat
     const productName = data?.response?.name || item.productName;
 
     return (
-        
+
         <Paper
             elevation={0}
             sx={{
                 p: 2.5,
                 borderRadius: 3,
-                border: "1px solid #e2e8f0",
+
+                border: "1px solid",
+                borderColor: "divider",
                 display: "flex",
                 alignItems: "center",
                 gap: 2.5,
@@ -45,8 +47,8 @@ export default function CartItem({ item, onRemove, onUpdate, isRemoving, isUpdat
             <Box sx={{ flex: 1 }}>
                 <Typography fontWeight={700} fontSize={15}>{productName}</Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-            ${item.price} {t('each')}
-        </Typography>
+                    ${item.price} {t('each')}
+                </Typography>
 
                 {/* QUANTITY */}
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1.5 }}>
@@ -55,7 +57,8 @@ export default function CartItem({ item, onRemove, onUpdate, isRemoving, isUpdat
                         disabled={item.count <= 1 || isUpdating}
                         onClick={() => onUpdate({ productId: item.productId, count: item.count - 1 })}
                         sx={{
-                            border: "1px solid #e2e8f0", borderRadius: 1.5, width: 30, height: 30,
+                            border: "1px solid",
+                            borderColor: "divider", borderRadius: 1.5, width: 30, height: 30,
                             "&:hover": { borderColor: "#c026d3", color: "#c026d3" }
                         }}
                     >
@@ -71,7 +74,8 @@ export default function CartItem({ item, onRemove, onUpdate, isRemoving, isUpdat
                         disabled={isUpdating}
                         onClick={() => onUpdate({ productId: item.productId, count: item.count + 1 })}
                         sx={{
-                            border: "1px solid #e2e8f0", borderRadius: 1.5, width: 30, height: 30,
+                            border: "1px solid",
+                            borderColor: "divider", borderRadius: 1.5, width: 30, height: 30,
                             "&:hover": { borderColor: "#c026d3", color: "#c026d3" }
                         }}
                     >

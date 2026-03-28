@@ -38,6 +38,7 @@ export default function FeaturesSection() {
   return (
     <Box sx={{ py: 7, width: "100%" }}>
       <Container maxWidth="lg">
+        
 
         <Grid container spacing={4}>
           {features.map((feature, index) => (
@@ -53,7 +54,7 @@ export default function FeaturesSection() {
                 {/* Icon Box */}
                 <Box
                   sx={{
-                    backgroundColor: "#fae8ff",
+                   backgroundColor: (theme) => theme.palette.mode === "dark" ? "#5c0764" : "#fae8ff",
                     borderRadius: 3,
                     p: 1.5,
                     display: "flex",
@@ -98,7 +99,7 @@ export default function FeaturesSection() {
       <Box
         sx={{
           mt: 7,
-          borderBottom: "1px solid #e3e3e3",
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
         }}
       />
     </Box>

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Profile() {
   const { data, isLoading, isError, error } = useProfile();
+  console.log(data);
   const location = useLocation();
   const isOrders = location.pathname.includes("orders");
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ export default function Profile() {
           display: "flex", alignItems: "center", gap: 1.5,
           px: 2.5, py: 1.5, borderRadius: "12px",
           fontWeight: 600, fontSize: "0.95rem", cursor: "pointer", transition: "all 0.2s",
-          color: active ? "#fff" : "#555",
+          color: active ? "#fff" : "text.secondary",
           background: active ? "linear-gradient(135deg, #c026d3, #a855f7)" : "transparent",
           boxShadow: active ? "0 4px 14px rgba(192,38,211,0.35)" : "none",
           "&:hover": {
@@ -43,13 +44,13 @@ export default function Profile() {
   );
 
   return (
-    <Box sx={{ minHeight: "100vh", background: "#f8f8fb", py: 6, px: { xs: 2, md: 6 } }}>
+    <Box sx={{ minHeight: "100vh", py: 6, px: { xs: 2, md: 6 } }}>
       <Box sx={{ maxWidth: 1100, mx: "auto" }}>
 
         {/* Header Card */}
         <Paper elevation={0} sx={{
           borderRadius: "20px", p: { xs: 3, md: 4 }, mb: 4,
-          border: "1px solid #ececf3", background: "#fff",
+          border: "1px solid ", borderColor: "divider",
           display: "flex", flexDirection: { xs: "column", sm: "row" },
           alignItems: { xs: "flex-start", sm: "center" }, gap: 3,
           position: "relative", overflow: "hidden",
@@ -60,12 +61,12 @@ export default function Profile() {
           </Avatar>
 
           <Box sx={{ flex: 1 }}>
-            <Typography sx={{ fontWeight: 700, fontSize: "1.4rem", color: "#111", lineHeight: 1.2 }}>
+            <Typography sx={{ fontWeight: 700, fontSize: "1.4rem", lineHeight: 1.2 }}>
               {data?.fullName ?? "—"}
             </Typography>
-            <Typography sx={{ color: "#888", fontSize: "0.9rem", mt: 0.5 }}>{data?.email ?? "—"}</Typography>
+            <Typography sx={{ color: "text.secondary", fontSize: "0.9rem", mt: 0.5 }}>{data?.email ?? "—"}</Typography>
             {data?.phoneNumber && (
-              <Typography sx={{ color: "#888", fontSize: "0.9rem" }}>{data.phoneNumber}</Typography>
+              <Typography ssx={{ color: "text.secondary", fontSize: "0.9rem", mt: 0.5 }}>{data.phoneNumber}</Typography>
             )}
           </Box>
 
@@ -76,7 +77,12 @@ export default function Profile() {
               sx={{ background: "linear-gradient(135deg, #c026d3, #a855f7)", color: "#fff", fontWeight: 600, fontSize: "0.8rem" }}
             />
             {data?.city && (
-              <Chip label={data.city} size="small" variant="outlined" sx={{ borderColor: "#ddd", color: "#666", fontSize: "0.8rem" }} />
+              <Chip
+                label={data.city}
+                size="small"
+                variant="outlined"
+                sx={{ borderColor: "divider", color: "text.secondary", fontSize: "0.8rem" }}
+              />
             )}
           </Box>
         </Paper>
@@ -85,8 +91,8 @@ export default function Profile() {
         <Box sx={{ display: "flex", gap: 3, alignItems: "flex-start", flexDirection: { xs: "column", md: "row" } }}>
 
           {/* Sidebar Nav */}
-          <Paper elevation={0} sx={{ borderRadius: "18px", border: "1px solid #ececf3", background: "#fff", p: 2, minWidth: 200, width: { xs: "100%", md: 220 }, flexShrink: 0 }}>
-            <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, color: "#bbb", textTransform: "uppercase", letterSpacing: 1, px: 2, mb: 1 }}>
+          <Paper elevation={0} sx={{ borderRadius: "18px", border: "1px solid", borderColor: "divider", p: 2, minWidth: 200, width: { xs: "100%", md: 220 }, flexShrink: 0 }}>
+            <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, color: "text.disabled", textTransform: "uppercase", letterSpacing: 1, px: 2, mb: 1 }}>
               {t('Navigation')}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
@@ -96,7 +102,7 @@ export default function Profile() {
           </Paper>
 
           {/* Main Content */}
-          <Paper elevation={0} sx={{ borderRadius: "18px", border: "1px solid #ececf3", background: "#fff", p: { xs: 3, md: 4 }, flex: 1, minHeight: 300 }}>
+          <Paper elevation={0} sx={{ borderRadius: "18px", border: "1px solid", borderColor: "divider", p: { xs: 3, md: 4 }, flex: 1, minHeight: 300 }}>
             <Outlet context={{ data }} />
           </Paper>
         </Box>

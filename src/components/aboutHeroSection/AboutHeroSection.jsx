@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography, Chip } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 
- 
+
 
 export default function AboutHeroSection() {
   const { t } = useTranslation();
@@ -19,8 +19,10 @@ export default function AboutHeroSection() {
       <Box
         sx={{
           py: { xs: 8, md: 17 },
-          background:
-            "linear-gradient(90deg,#f3e8ff 0%, #ffffff 40%, #fff7ed 100%)",
+          backgroundImage: (theme) => theme.palette.mode === "dark"
+            ? "linear-gradient(90deg, #3b0764 0%, #0f172a 40%, #1c0a00 100%)"
+            : "linear-gradient(90deg, #f3e8ff 0%, #ffffff 40%, #fff7ed 100%)",
+        backgroundAttachment: "fixed", 
           textAlign: "center",
         }}
       >
@@ -28,10 +30,8 @@ export default function AboutHeroSection() {
           <Chip
             label={t('Our Story')}
             sx={{
-              mb: 3,
-              px: 2,
-              fontWeight: 600,
-              bgcolor: "#f3e8ff",
+              mb: 3, px: 2, fontWeight: 600,
+              bgcolor: (theme) => theme.palette.mode === "dark" ? "#3b0764" : "#f3e8ff",
               color: "#a21caf",
             }}
           />
@@ -64,9 +64,10 @@ export default function AboutHeroSection() {
       <Box
         sx={{
           py: { xs: 6, md: 8 },
-          borderTop: "1px solid #eee",
-          borderBottom: "1px solid #eee",
-          bgcolor: "#fafafa",
+          borderTop: "1px solid",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper",
         }}
       >
         <Container maxWidth="lg">

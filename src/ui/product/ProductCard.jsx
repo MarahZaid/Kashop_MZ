@@ -34,7 +34,7 @@ export default function ProductCard({ product }) {
       <Box
         sx={{
           height: 350,
-          background: "#f3f4f6",
+           backgroundColor: (theme) => theme.palette.mode === "dark" ? "#1e1e2e" : "#f3f4f6",
           borderRadius: 3,
           overflow: "hidden",
           position: "relative",
@@ -70,22 +70,23 @@ export default function ProductCard({ product }) {
             fullWidth
             startIcon={<ShoppingBagOutlinedIcon />}
             sx={{
-              bgcolor: 'white',
-              color: '#0f172a',
+              bgcolor: 'background.paper',   // ✅
+        color: 'text.primary',         // ✅
+        '&:hover': { bgcolor: 'action.hover' } , // ✅
               textTransform: 'none',
               fontWeight: 'bold',
               borderRadius: 2,
-              '&:hover': { bgcolor: '#f8fafc' }
+              
             }}
           >
             Add to Cart
           </Button>
           
           <Box sx={{ 
-            bgcolor: 'white', p: 1, borderRadius: 2, display: 'flex', 
+            bgcolor: 'background.paper',  p: 1, borderRadius: 2, display: 'flex', 
             alignItems: 'center', cursor: 'pointer' 
           }}>
-            <FavoriteBorderIcon sx={{ color: '#0f172a' }} />
+            <FavoriteBorderIcon sx={{ color: 'text.primary' }} />
           </Box>
         </Box>
       </Box>

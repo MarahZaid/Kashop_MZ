@@ -2,7 +2,7 @@ import useProduct from "../../hooks/useProduct";
 import { useParams } from "react-router-dom";
 import {
     Box, Container, Grid, Typography, Rating, Button,
-    Divider, Stack, IconButton, Avatar, Paper
+    Divider, Stack, IconButton, Avatar, Paper, TextField
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -12,6 +12,8 @@ import Loader from "../../ui/loader/Loader";
 import { useState } from "react";
 import useAddToCart from "../../hooks/useAddToCart";
 import { useTranslation } from 'react-i18next';
+import useAddReview from "../../hooks/useAddReview";
+import { useAuthStore } from '../../store/useAuthStore';
 
 export default function ProductDetails() {
     const { t } = useTranslation();
@@ -20,6 +22,30 @@ export default function ProductDetails() {
     const [quantity, setQuantity] = useState(1);
 
     const { mutate: addToCart, isPending } = useAddToCart();
+
+    const token = useAuthStore((state) => state.token);
+    const { mutate: addReview, isPending: isReviewPending } = useAddReview(id);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
+
+    const [reviewStatus, setReviewStatus] = useState(null); // 'success' | 'error'
+
+    const handleSubmitReview = () => {
+        if (!rating || !comment.trim()) return;
+        addReview(
+            { Rating: rating, Comment: comment },
+            {
+                onSuccess: () => {
+                    setRating(0);
+                    setComment("");
+                    setReviewStatus('success');
+                },
+                onError: () => {
+                    setReviewStatus('error');
+                }
+            }
+        );
+    };
 
     if (isLoading) return <Loader />;
     if (isError) return <Box color={'red'} sx={{ p: 5 }}>{error.message}</Box>;
@@ -70,7 +96,7 @@ export default function ProductDetails() {
                                 sx={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    border: '1px solid #ddd',
+                                    border: '1px solid ', borderColor: "divider",
                                     borderRadius: '6px',
                                     justifyContent: 'space-between'
                                 }}
@@ -89,7 +115,7 @@ export default function ProductDetails() {
 
                         <Grid item size={{ xs: 12, sm: 8 }}>
                             <Button
-                            disabled={isPending}
+                                disabled={isPending}
                                 fullWidth
                                 variant="contained"
                                 startIcon={<ShoppingBagOutlinedIcon />}
@@ -111,7 +137,8 @@ export default function ProductDetails() {
                         <Grid item size={{ xs: 1, sm: 1 }}>
                             <IconButton
                                 sx={{
-                                    border: '1px solid #ddd',
+                                    border: '1px solid ',
+                                    borderColor: "divider",
                                     p: 1.5,
                                     width: '100%'
                                 }}
@@ -124,10 +151,79 @@ export default function ProductDetails() {
                 </Grid>
             </Grid>
 
+            {/* ADD REVIEW FORM */}
+            {token && (
+                <Paper elevation={0} sx={{
+                    p: 3, mb: 4, borderRadius: 3,
+                    border: "0.5px solid", borderColor: "divider"
+                }}>
+                    <Typography fontWeight={700} fontSize={16} mb={2}>
+                        {t('Write a Review')}
+                    </Typography>
+
+                    <Typography fontSize={13} color="text.secondary" mb={1}>
+                        {t('Your Rating')}
+                    </Typography>
+                    <Rating
+                        value={rating}
+                        onChange={(_, val) => setRating(val)}
+                        sx={{ mb: 2 }}
+                    />
+
+                    <TextField
+                        fullWidth
+                        multiline
+                        rows={3}
+                        label={t('Your Comment')}
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        sx={{ mb: 2 }}
+                    />
+
+                    <Button
+                        variant="contained"
+                        disabled={isReviewPending || !rating || !comment.trim()}
+                        onClick={handleSubmitReview}
+                        sx={{
+                            bgcolor: "#c026d3",
+                            "&:hover": { bgcolor: "#a21caf" },
+                            borderRadius: 2,
+                            textTransform: "none",
+                            fontWeight: 700
+                        }}
+                    >
+                        {t('Submit Review')}
+                    </Button>
+                    {reviewStatus === 'success' && (
+                        <Box sx={{
+                            mt: 2, p: 2, borderRadius: 2,
+                            bgcolor: "#f0fdf4", border: "1px solid #86efac",
+                            display: "flex", alignItems: "center", gap: 1
+                        }}>
+                            <Typography fontSize={14} color="#16a34a" fontWeight={500}>
+                                ✓ {t('review_success')}
+                            </Typography>
+                        </Box>
+                    )}
+
+                    {reviewStatus === 'error' && (
+                        <Box sx={{
+                            mt: 2, p: 2, borderRadius: 2,
+                            bgcolor: "#fef2f2", border: "1px solid #fca5a5",
+                            display: "flex", alignItems: "center", gap: 1
+                        }}>
+                            <Typography fontSize={14} color="#dc2626" fontWeight={500}>
+                                ✗ {t('review_error')}
+                            </Typography>
+                        </Box>
+                    )}
+                </Paper>
+            )}
+
 
             <Box sx={{ mt: 5 }}>
                 <Typography variant="h5" fontWeight="bold" sx={{ mb: 4 }}>
-                      {t('Customer Reviews')} ({product.reviews?.length || 0})
+                    {t('Customer Reviews')} ({product.reviews?.length || 0})
                 </Typography>
 
                 <Divider sx={{ mb: 4 }} />
@@ -136,7 +232,7 @@ export default function ProductDetails() {
                     {product.reviews && product.reviews.length > 0 ? (
                         product.reviews.map((rev, idx) => (
                             <Grid item size={{ xs: 12 }} key={idx}>
-                                <Paper elevation={0} sx={{ p: 3, bgcolor: '#F9FAFB', borderRadius: '12px' }}>
+                                <Paper elevation={0} sx={{ p: 3, backgroundColor: (theme) => theme.palette.mode !== "dark" ? "#F9FAFB" : "", borderRadius: '12px' }}>
                                     <Stack direction="row" spacing={2} alignItems="flex-start">
                                         <Avatar sx={{ bgcolor: '#c026d3' }}>{rev.userName.charAt(0).toUpperCase()}</Avatar>
                                         <Box sx={{ width: '100%' }}>

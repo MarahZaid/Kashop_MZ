@@ -23,7 +23,7 @@ export default function TeamSection() {
     { name: "David Park", role: t("Operations Lead"), image: team4 },
   ];
   return (
-    <Box sx={{ py: { xs: 6, md: 10 }, bgcolor: "#fff" }}>
+    <Box sx={{ py: { xs: 6, md: 10 } }}>
       <Container maxWidth="lg" disableGutters>
 
         {/* Heading */}

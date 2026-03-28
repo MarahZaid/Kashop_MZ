@@ -40,7 +40,7 @@ export default function ValuesSection() {
     },
   ];
   return (
-    <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#fafafa" }}>
+    <Box sx={{ py: { xs: 8, md: 12 }}}>
       <Container maxWidth="lg">
 
         {/* Title */}

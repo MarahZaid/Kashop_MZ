@@ -16,37 +16,83 @@ import { useTranslation } from "react-i18next";
 import useChangeEmail from "../../hooks/useChangeEmail";
 import useChangePassword from "../../hooks/useChangePassword";
 
-const accentGradient = "linear-gradient(135deg, #c026d3, #a855f7)";
+const accentGradient = (theme) =>
+  `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`;
 
 const styledInput = {
   "& .MuiOutlinedInput-root": {
-    borderRadius: "10px", fontSize: "0.92rem",
-    "&:hover fieldset": { borderColor: "#c026d3" },
-    "&.Mui-focused fieldset": { borderColor: "#c026d3", borderWidth: "1.5px" },
+    borderRadius: "10px",
+    fontSize: "0.92rem",
+    "&:hover fieldset": {
+      borderColor: "primary.main",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "primary.main",
+      borderWidth: "1.5px",
+    },
   },
-  "& label.Mui-focused": { color: "#c026d3" },
+  "& label.Mui-focused": {
+    color: "primary.main",
+  },
 };
 
 const submitBtn = {
-  background: accentGradient, color: "#fff", fontWeight: 700,
-  borderRadius: "10px", px: 3, py: 1.1, textTransform: "none", fontSize: "0.9rem",
-  boxShadow: "0 4px 14px rgba(192,38,211,0.25)",
-  "&:hover": { opacity: 0.9, boxShadow: "0 6px 18px rgba(192,38,211,0.35)" },
+  background: (theme) => accentGradient(theme),
+  color: "common.white",
+  fontWeight: 700,
+  borderRadius: "10px",
+  px: 3,
+  py: 1.1,
+  textTransform: "none",
+  fontSize: "0.9rem",
+  boxShadow: (theme) => theme.shadows[4],
+  "&:hover": {
+    opacity: 0.9,
+    boxShadow: (theme) => theme.shadows[6],
+  },
   "&:disabled": { opacity: 0.6 },
 };
 
 function InfoRow({ icon, label, value }) {
   const { t } = useTranslation();
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 2, py: 1.8, px: 2, borderRadius: "12px", transition: "background 0.15s", "&:hover": { background: "#faf5ff" } }}>
-      <Box sx={{ width: 40, height: 40, borderRadius: "10px", background: "linear-gradient(135deg, rgba(192,38,211,0.12), rgba(168,85,247,0.12))", display: "flex", alignItems: "center", justifyContent: "center", color: "#c026d3", flexShrink: 0 }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: 2,
+        py: 1.8,
+        px: 2,
+        borderRadius: "12px",
+        transition: "background 0.15s",
+        "&:hover": {
+          background: (theme) =>
+            theme.palette.mode === "dark"
+              ? "rgba(192,38,211,0.08)"
+              : "#faf5ff",
+        },
+      }}
+    >
+      <Box
+        sx={{
+          width: 40,
+          height: 40,
+          borderRadius: "10px",
+          background: (theme) =>
+            `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.primary.light}20)`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "primary.main",
+        }}
+      >
         {icon}
       </Box>
       <Box>
-        <Typography sx={{ fontSize: "0.72rem", color: "#aaa", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>
+        <Typography sx={{ fontSize: "0.72rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>
           {label}
         </Typography>
-        <Typography sx={{ fontSize: "0.97rem", color: value ? "#222" : "#ccc", fontWeight: 500 }}>
+        <Typography sx={{ fontSize: "0.97rem", color: value ? "text.primary" : "text.disabled", fontWeight: 500 }}>
           {value ?? t('Not provided')}
         </Typography>
       </Box>
@@ -59,22 +105,56 @@ function SectionToggle({ icon, title, subtitle, open, onToggle }) {
     <Box
       onClick={onToggle}
       sx={{
-        display: "flex", alignItems: "center", gap: 2, p: 2,
-        borderRadius: "12px", cursor: "pointer", border: "1.5px solid",
-        borderColor: open ? "#c026d3" : "#ececf3",
-        background: open ? "rgba(192,38,211,0.04)" : "#fafafa",
+        display: "flex",
+        alignItems: "center",
+        gap: 2,
+        p: 2,
+        borderRadius: "12px",
+        cursor: "pointer",
+        border: "1.5px solid",
+        borderColor: open ? "primary.main" : "divider",
+        background: (theme) =>
+          open
+            ? theme.palette.mode === "dark"
+              ? "rgba(192,38,211,0.08)"
+              : "rgba(192,38,211,0.04)"
+            : "background.paper",
         transition: "all 0.2s",
-        "&:hover": { borderColor: "#c026d3", background: "rgba(192,38,211,0.04)" },
+        "&:hover": {
+          borderColor: "primary.main",
+          background: (theme) =>
+            theme.palette.mode === "dark"
+              ? "rgba(192,38,211,0.08)"
+              : "rgba(192,38,211,0.04)",
+        },
       }}
     >
-      <Box sx={{ width: 40, height: 40, borderRadius: "10px", background: open ? accentGradient : "linear-gradient(135deg, rgba(192,38,211,0.12), rgba(168,85,247,0.12))", display: "flex", alignItems: "center", justifyContent: "center", color: open ? "#fff" : "#c026d3", flexShrink: 0, transition: "all 0.2s" }}>
-        {icon}
+      <Box
+        sx={{
+          width: 40,
+          height: 40,
+          borderRadius: "10px",
+          background: (theme) =>
+            open
+              ? accentGradient(theme)
+              : `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.primary.light}20)`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: open ? "common.white" : "primary.main",
+        }}
+      >{icon}
       </Box>
       <Box sx={{ flex: 1 }}>
-        <Typography sx={{ fontWeight: 700, fontSize: "0.95rem", color: "#111" }}>{title}</Typography>
-        <Typography sx={{ fontSize: "0.8rem", color: "#aaa" }}>{subtitle}</Typography>
+        <Typography sx={{ fontWeight: 700, fontSize: "0.95rem", color: "text.primary" }}>{title}</Typography>
+        <Typography sx={{ fontSize: "0.8rem", color: "text.secondary" }}>{subtitle}</Typography>
       </Box>
-      <EditOutlinedIcon sx={{ color: open ? "#c026d3" : "#ccc", fontSize: 18, transition: "color 0.2s" }} />
+      <EditOutlinedIcon
+        sx={{
+          color: open ? "primary.main" : "text.disabled",
+          fontSize: 18,
+        }}
+      />
     </Box>
   );
 }
@@ -101,7 +181,7 @@ function ChangeEmailForm() {
       {isError && <Alert severity="error" sx={{ borderRadius: "10px" }}>{error?.response?.data?.message ?? t('Something went wrong')}</Alert>}
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button type="submit" disabled={isPending || !newEmail} sx={submitBtn}>
-          {isPending ? <CircularProgress size={18} sx={{ color: "#fff" }} /> : t('Update Email')}
+          {isPending ? <CircularProgress size={18} sx={{ color: "common.white" }} /> : t('Update Email')}
         </Button>
       </Box>
     </Box>
@@ -178,10 +258,10 @@ export default function ProfileInfo() {
 
   return (
     <Box>
-      <Typography sx={{ fontWeight: 700, fontSize: "1.15rem", color: "#111", mb: 0.5 }}>
+      <Typography sx={{ fontWeight: 700, fontSize: "1.15rem", mb: 0.5 }}>
         {t('Personal Information')}
       </Typography>
-      <Typography sx={{ fontSize: "0.88rem", color: "#aaa", mb: 3 }}>
+      <Typography sx={{ fontSize: "0.88rem", mb: 3, color: "text.secondary" }}>
         {t('View your details and update your credentials')}
       </Typography>
       <Divider sx={{ mb: 1 }} />

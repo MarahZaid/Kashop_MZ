@@ -42,10 +42,12 @@ export default function CategoriesSection() {
                                     height: "100%",
                                     py: 5,
                                     textAlign: "center",
-                                    background: "linear-gradient(135deg, #fdf2f8, #f3e8ff)",
+                                    background: (theme) =>
+                                        theme.palette.mode === "dark"
+                                            ? "linear-gradient(135deg, #3b0764, #4a044e)"
+                                            : "linear-gradient(135deg, #fdf2f8, #f3e8ff)",
                                     transition: "0.3s",
                                     cursor: "pointer",
-
                                     "&:hover": {
                                         transform: "translateY(-8px)",
                                         boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
@@ -57,7 +59,7 @@ export default function CategoriesSection() {
                                         component="h3"
                                         fontWeight={700}
                                         fontSize="1.2rem"
-                                        color="black"
+                                        color="text.primary"  // ← بدل "black"
                                     >
                                         {category.name}
                                     </Typography>

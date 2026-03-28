@@ -12,7 +12,7 @@ import { useState } from "react";
 import useCart from "../../hooks/useCart";
 import useRemoveFromCart from "../../hooks/useRemoveFromCart";
 import useUpdateCartItem from "../../hooks/useUpdateCartItem";
-import useCheckout from "../../hooks/useCheckout"; 
+import useCheckout from "../../hooks/useCheckout";
 import CartItem from "./CartItem";
 import Loader from "../../ui/loader/Loader";
 import { useTranslation } from 'react-i18next';
@@ -45,12 +45,12 @@ export default function Cart() {
 
     if (items.length === 0) return (
         <Box sx={{ minHeight: "80vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 2 }}>
-            <ShoppingBagOutlinedIcon sx={{ fontSize: 80, color: "#e2e8f0" }} />
+            <ShoppingBagOutlinedIcon sx={{ fontSize: 80, color: "divider" }} />
             <Typography variant="h5" fontWeight={700}>{t('Your cart is empty')}</Typography>
             <Typography color="text.secondary">{t('cart_empty_desc')}</Typography>
             <Button
                 component={RouterLink} to="/shop" variant="contained"
-                sx={{ mt: 1, bgcolor: "#c026d3", borderRadius: 2, textTransform: "none", fontWeight: 600, px: 4, "&:hover": { bgcolor: "#a21caf" } }}
+                sx={{ mt: 1, bgcolor: "primary.main", borderRadius: 2, textTransform: "none", fontWeight: 600, px: 4, "&:hover": { bgcolor: "#a21caf" } }}
             >
                 {t('Start Shopping')}
             </Button>
@@ -58,7 +58,7 @@ export default function Cart() {
     );
 
     return (
-        <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh", pt: 8, pb: 10 }}>
+        <Box sx={{ minHeight: "100vh", pt: 8, pb: 10 }}>
             <Container maxWidth="lg">
 
                 {/* HEADER */}
@@ -89,7 +89,11 @@ export default function Cart() {
 
                     {/* ORDER SUMMARY */}
                     <Grid item size={{ xs: 12, md: 4 }}>
-                        <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: "1px solid #e2e8f0", position: "sticky", top: 100 }}>
+                        <Paper elevation={0} sx={{
+                            p: 3, borderRadius: 3, borderTop: "1px solid",
+                            borderBottom: "1px solid",
+                            borderColor: "divider", position: "sticky", top: 100
+                        }}>
                             <Typography variant="h6" fontWeight={700} mb={3}>{t('Order Summary')}</Typography>
 
                             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -114,17 +118,17 @@ export default function Cart() {
                                 fullWidth variant="contained" size="large"
                                 onClick={() => setOpenDialog(true)}
                                 sx={{
-                                    bgcolor: "#c026d3", borderRadius: 2.5, py: 1.5,
+                                    bgcolor: "primary.main", borderRadius: 2.5, py: 1.5,
                                     fontWeight: 700, textTransform: "none", fontSize: 15,
                                     boxShadow: "0 4px 15px rgba(192,38,211,0.3)",
-                                    "&:hover": { bgcolor: "#a21caf" }
+                                    "&:hover": { bgcolor: "primary.dark" }
                                 }}
                             >
                                 {t('Proceed to Checkout')}
                             </Button>
 
                             <Button fullWidth component={RouterLink} to="/shop"
-                                sx={{ mt: 1.5, color: "#64748b", textTransform: "none", fontWeight: 600, "&:hover": { color: "#c026d3" } }}
+                                sx={{ mt: 1.5, color: "#64748b", textTransform: "none", fontWeight: 600, "&:hover": { color: "primary.main" } }}
                             >
                                 {t('Continue Shopping')}
                             </Button>
@@ -155,18 +159,18 @@ export default function Cart() {
                             elevation={0}
                             sx={{
                                 p: 2, mb: 1.5, borderRadius: 2, cursor: "pointer",
-                                border: paymentMethod === "Visa" ? "2px solid #c026d3" : "1px solid #e2e8f0",
-                                bgcolor: paymentMethod === "Visa" ? "#fdf4ff" : "white",
+                                border: paymentMethod === "Visa" ? "2px solid primary.main" : "1px solid divider",
+                                backgroundColor: (theme) => theme.palette.mode === "dark" ? (paymentMethod === "Visa" ? "rgba(192,38,211,0.1)" : "background.paper") : "#fdf4ff",
                                 display: "flex", alignItems: "center", gap: 2,
                                 transition: "0.2s"
                             }}
                         >
-                            <CreditCardIcon sx={{ color: paymentMethod === "Visa" ? "#c026d3" : "#94a3b8" }} />
+                            <CreditCardIcon sx={{ color: paymentMethod === "Visa" ? "primary.main" : "#94a3b8" }} />
                             <Box sx={{ flex: 1 }}>
                                 <Typography fontWeight={600}>Visa</Typography>
                                 <Typography variant="body2" color="text.secondary">{t('Pay with credit/debit card')}</Typography>
                             </Box>
-                            <FormControlLabel value="Visa" control={<Radio sx={{ color: "#c026d3", "&.Mui-checked": { color: "#c026d3" } }} />} label="" />
+                            <FormControlLabel value="Visa" control={<Radio sx={{ color: "primary.main", "&.Mui-checked": { color: "primary.main" } }} />} label="" />
                         </Paper>
 
                         {/* CASH */}
@@ -175,18 +179,19 @@ export default function Cart() {
                             elevation={0}
                             sx={{
                                 p: 2, borderRadius: 2, cursor: "pointer",
-                                border: paymentMethod === "Cash" ? "2px solid #c026d3" : "1px solid #e2e8f0",
-                                bgcolor: paymentMethod === "Cash" ? "#fdf4ff" : "white",
+                                border: paymentMethod === "Cash" ? "2px solid primary.main" : "1px solid divider",
+                                
+                                backgroundColor: (theme) => theme.palette.mode === "dark" ? (paymentMethod === "Cash" ? "rgba(192,38,211,0.1)" : "background.paper") : "#fdf4ff",
                                 display: "flex", alignItems: "center", gap: 2,
                                 transition: "0.2s"
                             }}
                         >
-                            <MoneyIcon sx={{ color: paymentMethod === "Cash" ? "#c026d3" : "#94a3b8" }} />
+                            <MoneyIcon sx={{ color: paymentMethod === "Cash" ? "primary.main" : "#94a3b8" }} />
                             <Box sx={{ flex: 1 }}>
                                 <Typography fontWeight={600}>Cash</Typography>
                                 <Typography variant="body2" color="text.secondary">{t('Pay on delivery')}</Typography>
                             </Box>
-                            <FormControlLabel value="Cash" control={<Radio sx={{ color: "#c026d3", "&.Mui-checked": { color: "#c026d3" } }} />} label="" />
+                            <FormControlLabel value="Cash" control={<Radio sx={{ color: "primary.main", "&.Mui-checked": { color: "primary.main" } }} />} label="" />
                         </Paper>
                     </RadioGroup>
                 </DialogContent>
@@ -203,9 +208,9 @@ export default function Cart() {
                         disabled={isCheckingOut}
                         onClick={handleCheckout}
                         sx={{
-                            bgcolor: "#c026d3", borderRadius: 2, px: 3,
+                            bgcolor: "primary.main", borderRadius: 2, px: 3,
                             textTransform: "none", fontWeight: 700,
-                            "&:hover": { bgcolor: "#a21caf" }
+                            "&:hover": { bgcolor: "primary.dark" }
                         }}
                     >
                         {isCheckingOut ? t('Processing...') : t('Confirm Order')}

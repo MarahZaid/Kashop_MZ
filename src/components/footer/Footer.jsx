@@ -11,14 +11,11 @@ import { Link as RouterLink } from "react-router-dom";
 export default function Footer() {
     const { t } = useTranslation();
     return (
-        <Box
-            component="footer"
-            sx={{
-                
-                backgroundColor: "#f9fafb",
-                borderTop: "1px solid #e0e0e0"
-            }}
-        >
+        <Box component="footer" sx={{
+            backgroundColor: "background.paper",  
+            borderTop: "1px solid",
+            borderColor: "divider",               
+        }}>
             <Container sx={{ py: 7 }}>
                 <Grid container spacing={4}>
 
@@ -52,10 +49,10 @@ export default function Footer() {
                                 sx={{
                                     position: 'relative',
                                     textDecoration: 'none',
-                                    color: 'black',
+                                    color: 'text.primary', 
                                     fontSize: { xs: '1rem', md: '1.4rem' },
                                     fontWeight: 700,
-                                    
+
                                 }}
                             >
                                 KASHOP
@@ -76,7 +73,7 @@ export default function Footer() {
                     </Grid>
 
                     {/* Shop */}
-                    <Grid size={{ xs: 12, md: 3}}>
+                    <Grid size={{ xs: 12, md: 3 }}>
                         <Typography fontWeight={600} gutterBottom>
                             {t('Shop')}
                         </Typography>
@@ -94,36 +91,35 @@ export default function Footer() {
                     {/* Help */}
                     <Grid size={{ xs: 12, md: 3 }}>
                         {/* Help */}
-        <Typography fontWeight={600} gutterBottom>{t('Help')}</Typography>
-        <FooterLink to="/">{t('FAQ')}</FooterLink>
-        <FooterLink to="/">{t('Shipping & Returns')}</FooterLink>
-        <FooterLink to="/">{t('Size Guide')}</FooterLink>
-        <FooterLink to="/">{t('Contact Us')}</FooterLink>
-        <FooterLink to="/">{t('Track Order')}</FooterLink>
+                        <Typography fontWeight={600} gutterBottom>{t('Help')}</Typography>
+                        <FooterLink to="/">{t('FAQ')}</FooterLink>
+                        <FooterLink to="/">{t('Shipping & Returns')}</FooterLink>
+                        <FooterLink to="/">{t('Size Guide')}</FooterLink>
+                        <FooterLink to="/">{t('Contact Us')}</FooterLink>
+                        <FooterLink to="/">{t('Track Order')}</FooterLink>
                     </Grid>
 
                     {/* About */}
                     <Grid size={{ xs: 12, md: 2 }}>
                         <Typography fontWeight={600} gutterBottom>{t('About')}</Typography>
-        <FooterLink to="/">{t('Our Story')}</FooterLink>
-        <FooterLink to="/">{t('Sustainability')}</FooterLink>
-        <FooterLink to="/">{t('Careers')}</FooterLink>
-        <FooterLink to="/">{t('Press')}</FooterLink>
+                        <FooterLink to="/">{t('Our Story')}</FooterLink>
+                        <FooterLink to="/">{t('Sustainability')}</FooterLink>
+                        <FooterLink to="/">{t('Careers')}</FooterLink>
+                        <FooterLink to="/">{t('Press')}</FooterLink>
                     </Grid>
 
                 </Grid>
             </Container>
 
-            <Box
-                sx={{
-                    borderTop: "1px solid #e0e0e0",
-                    py: 2,
-                    textAlign: "center"
-                }}
-            >
+            <Box sx={{
+    borderTop: "1px solid",
+    borderColor: "divider",  // ✅
+    py: 2,
+    textAlign: "center"
+}}>
                 <Typography variant="body2" color="text.secondary">
-            © {new Date().getFullYear()} KaShop. {t('All rights reserved.')}
-        </Typography>
+                    © {new Date().getFullYear()} KaShop. {t('All rights reserved.')}
+                </Typography>
             </Box>
         </Box>
     );
@@ -143,7 +139,7 @@ function FooterLink({ children, to, sx }) {
                 "&:hover": {
                     color: "#c026d3"
                 },
-                
+
             }}
         >
             {children}
