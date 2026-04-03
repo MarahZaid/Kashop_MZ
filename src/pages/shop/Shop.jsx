@@ -16,7 +16,7 @@ const PRODUCTS_PER_PAGE = 12;
 const chipSx = (theme) => ({ bgcolor: theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff", color: "#c026d3", border: "1px solid #e879f9" });
 const selectedSx = (theme) => ({ "&.Mui-selected": { bgcolor: theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff", color: "#c026d3" }, "&.Mui-selected:hover": { bgcolor: "#fdf4ff" } });
 
-// ✅ دالة مساعدة تستخرج ID من الكاتيغوري كـ string دائماً
+
 const getCatId = (cat) => {
     if (cat === null || cat === undefined) return "";
     if (typeof cat === "string" || typeof cat === "number") return String(cat);
@@ -24,7 +24,7 @@ const getCatId = (cat) => {
     return String(cat);
 };
 
-// ✅ دالة مساعدة تستخرج اسم الكاتيغوري
+
 const getCatName = (cat) => {
     if (cat === null || cat === undefined) return "";
     if (typeof cat === "string") return cat;
@@ -44,7 +44,7 @@ export default function Shop() {
 
     const [search, setSearch] = useState("");
     const [searchInput, setSearchInput] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState(""); // ✅ دائماً string
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [priceRange, setPriceRange] = useState([0, 5000]);
     const [appliedPrice, setAppliedPrice] = useState([0, 5000]);
     const [sortBy, setSortBy] = useState("");
@@ -68,13 +68,15 @@ export default function Shop() {
     });
 
     const { data: categoriesData } = useCategories();
-    const categories = categoriesData?.response?.data || [];
+
+    const categories = (categoriesData?.response?.data || []).map((cat) =>
+        typeof cat === "object" && cat !== null ? cat : { id: cat, name: `Category ${cat}` }
+    );
     const products = selectedCategory
         ? (Array.isArray(data?.response) ? data.response : [])
         : (data?.response?.data || []);
     const totalPages = selectedCategory ? 1 : (data?.response?.totalPages || 1);
 
-    // ✅ الاسم المعروض للكاتيغوري المختارة في الـ Chip
     const selectedCategoryName = categories.find(
         (cat) => getCatId(cat) === selectedCategory
     );
@@ -99,7 +101,7 @@ export default function Shop() {
         setPage(1);
     };
 
-    // ✅ دائماً نحفظ string في selectedCategory
+   
     const handleCategoryClick = (cat) => {
         const catId = getCatId(cat);
         setSelectedCategory(catId === selectedCategory ? "" : catId);
@@ -178,7 +180,7 @@ export default function Shop() {
                                 </Box>
                                 <Collapse in={openCategories}>
                                     <List dense disablePadding sx={{ px: 1, pb: 1.5 }}>
-                                        {/* ✅ All Categories */}
+                                        {/*  All Categories */}
                                         <ListItemButton
                                             selected={selectedCategory === ""}
                                             onClick={() => handleCategoryClick("")}
@@ -187,7 +189,7 @@ export default function Shop() {
                                             <ListItemText primary={t('All Categories')} primaryTypographyProps={{ fontSize: 13 }} />
                                         </ListItemButton>
 
-                                        {/* ✅ كل كاتيغوري - نمرر الـ cat object للدالة وهي بتتعامل معه */}
+                                        
                                         {categories.map((cat) => {
                                             const catId = getCatId(cat);
                                             const catName = getCatName(cat);
@@ -287,7 +289,7 @@ export default function Shop() {
                                 {isLoading ? t('Loading...') : `${products.length} ${t('products found')}`}
                             </Typography>
                             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                                {/* ✅ الـ Chip بيعرض الاسم النصي فقط - مش object */}
+                               
                                 {selectedCategory && (
                                     <Chip
                                         label={`${t('Category')}: ${selectedCategoryLabel}`}
