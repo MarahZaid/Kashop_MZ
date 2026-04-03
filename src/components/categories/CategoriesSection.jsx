@@ -13,6 +13,7 @@ export default function CategoriesSection() {
     if (isError) return <Box color="red">{error.message}</Box>;
 
     const categories = data.response.data;
+    console.log(categories);
 
     return (
         <Box sx={{ pb: 10 }}>
