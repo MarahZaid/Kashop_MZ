@@ -18,11 +18,11 @@ import { useState } from "react";
 import { useAuthStore } from '../../store/useAuthStore';
 import useCart from '../../hooks/useCart';
 import { useTranslation } from 'react-i18next';
-import i18n from 'i18next';
 import useThemeStore from '../../store/useThemeStore'
 
 
 export default function Navbar() {
+    const { t, i18n } = useTranslation();
     const mode = useThemeStore((state) => state.mode);
     const toggleTheme = useThemeStore((state) => state.toggleTheme);
 
@@ -32,7 +32,7 @@ export default function Navbar() {
     const logout = useAuthStore((state) => state.logout);
     const navigate = useNavigate();
     const location = useLocation();
-    const { t } = useTranslation();
+
 
     const { data: cartData } = useCart();
     const cartCount = cartData?.items?.length || 0;
@@ -173,7 +173,7 @@ export default function Navbar() {
                             {/* User */}
                             <IconButton
                                 size="small"
-                                sx={{ p: { xs: 0.5, md: 1 }, color: "text.primary", display: { xs: 'none', md: 'flex' } }} // ← أضف display
+                                sx={{ p: { xs: 0.5, md: 1 }, color: "text.primary", display: { xs: 'none', md: 'flex' } }} 
                                 onClick={handleUserClick}
                             >
                                 <PersonOutlineIcon />
@@ -243,7 +243,7 @@ export default function Navbar() {
 
                     {/* MOBILE DRAWER */}
                     <Drawer
-                        anchor="left"
+                        anchor={i18n.language === 'ar' ? 'right' : 'left'}
                         open={open}
                         onClose={() => setOpen(false)}
                         PaperProps={{
@@ -262,7 +262,7 @@ export default function Navbar() {
                         </Box>
                         <List>
                             <ListItemButton component={RouterLink} to="/" onClick={() => setOpen(false)} selected={location.pathname === '/'}><ListItemText primary={t('Home')} /></ListItemButton>
-                            <ListItemButton component={RouterLink} to="/shop" onClick={() => setOpen(false)} selected={location.pathname === '/shop'}><ListItemText primary={t('Products')} /></ListItemButton>
+                            <ListItemButton component={RouterLink} to="/shop" onClick={() => setOpen(false)} selected={location.pathname === '/shop'}><ListItemText primary={t('Shop')} /></ListItemButton>
                             <ListItemButton component={RouterLink} to="/about" onClick={() => setOpen(false)} selected={location.pathname === '/about'}><ListItemText primary={t('About')} /></ListItemButton>
                             <ListItemButton component={RouterLink} to="/contact" onClick={() => setOpen(false)} selected={location.pathname === '/contact'}><ListItemText primary={t('Contact')} /></ListItemButton>
 

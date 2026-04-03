@@ -56,7 +56,7 @@ export default function Login() {
   };
 
   const { sendCode, resetPassword } = useForgotPassword();
-  const [forgotStep, setForgotStep] = useState(null); // null | 'email' | 'reset' | 'success'
+  const [forgotStep, setForgotStep] = useState(null); 
   const [forgotEmail, setForgotEmail] = useState('');
   const [code, setCode] = useState('');
   const [newPassword, setNewPassword] = useState('');

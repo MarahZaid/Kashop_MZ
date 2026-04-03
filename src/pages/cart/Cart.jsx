@@ -63,7 +63,7 @@ export default function Cart() {
 
                 {/* HEADER */}
                 <Box sx={{ mb: 4 }}>
-                    <Typography variant="h4" fontWeight={800}>{t('Shopping Cart')}</Typography>
+                    <Typography variant="h4" fontWeight={700}>{t('Shopping Cart')}</Typography>
                     <Typography color="text.secondary" sx={{ mt: 0.5 }}>
                         {items.length} {items.length === 1 ? t('item') : t('items')} {t('in your cart')}
                     </Typography>

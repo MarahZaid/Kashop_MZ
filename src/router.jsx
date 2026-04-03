@@ -12,6 +12,7 @@ import Profile from "./pages/profile/Profile.jsx";
 import ProfileInfo from "./pages/profile/ProfileInfo.jsx";
 import ProfileOrders from "./pages/profile/ProfileOrders.jsx";
 import ContactPage from "./pages/contact/Contact.jsx";
+import NotFound from './pages/notFound/NotFound.jsx';
 
 
 const router = createBrowserRouter([
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
         path: '/contact',
         element: <ContactPage />
       },
+      { path: '*', element: <NotFound /> },
       {
         path: '/profile',
         element:

@@ -73,7 +73,6 @@ i18n
                     "FAQ": "FAQ",
                     "Shipping & Returns": "Shipping & Returns",
                     "Size Guide": "Size Guide",
-                    "Contact Us": "Contact Us",
                     "Track Order": "Track Order",
 
 
@@ -156,7 +155,6 @@ i18n
                     "Don't have an account?": "Don't have an account?",
                     "Create your account": "Create your account",
                     "User Name": "User Name",
-                    "Full Name": "Full Name",
                     "Phone Number": "Phone Number",
                     "Already have an account?": "Already have an account?",
                     "Profile": "Profile",
@@ -206,7 +204,6 @@ i18n
                     "Message": "Message",
                     "message_placeholder": "Write your message here...",
                     "Send Message": "Send Message",
-                    "Phone": "Phone",
                     "Working Hours": "Working Hours",
                     "Location": "Location",
                     "contact_phone": "+970 599 000 000",
@@ -236,16 +233,17 @@ i18n
                     "Sending...": "Sending...",
                     "Enter the code sent to your email": "Enter the code sent to your email",
                     "Code": "Code",
-                    "New Password": "New Password",
                     "Reset Password": "Reset Password",
                     "Resetting...": "Resetting...",
                     "Password reset successfully!": "Password reset successfully!",
                     "Back to Login": "Back to Login",
-                    "Cancel": "Cancel",
                     "email_not_found": "Email not found.",
                     "invalid_code": "Invalid code or password too weak.",
                     "invalid_credentials": "Incorrect email or password. Please try again.",
-                    "account_locked": "Your account is locked due to multiple failed attempts. Please try again later."
+                    "account_locked": "Your account is locked due to multiple failed attempts. Please try again later.",
+                    "page_not_found": "Page Not Found",
+                    "page_not_found_desc": "The link you followed may be broken or the page may have been removed.",
+                    "Back to Home": "Back to Home",
 
 
                 }
@@ -316,7 +314,6 @@ i18n
                     "FAQ": "الأسئلة الشائعة",
                     "Shipping & Returns": "الشحن والإرجاع",
                     "Size Guide": "دليل المقاسات",
-                    "Contact Us": "تواصل معنا",
                     "Track Order": "تتبع الطلب",
 
 
@@ -400,7 +397,6 @@ i18n
                     "Don't have an account?": "ليس لديك حساب؟",
                     "Create your account": "إنشاء حسابك",
                     "User Name": "اسم المستخدم",
-                    "Full Name": "الاسم الكامل",
                     "Phone Number": "رقم الهاتف",
                     "Already have an account?": "هل لديك حساب بالفعل؟",
                     "Profile": "الملف الشخصي",
@@ -449,7 +445,6 @@ i18n
                     "Message": "الرسالة",
                     "message_placeholder": "اكتب رسالتك هنا...",
                     "Send Message": "إرسال الرسالة",
-                    "Phone": "رقم الهاتف",
                     "Working Hours": "ساعات العمل",
                     "Location": "الموقع",
                     "contact_phone": "+970 599 000 000",
@@ -479,16 +474,17 @@ i18n
                     "Sending...": "جاري الإرسال...",
                     "Enter the code sent to your email": "أدخل الكود المرسل لبريدك",
                     "Code": "الكود",
-                    "New Password": "كلمة المرور الجديدة",
                     "Reset Password": "إعادة تعيين كلمة المرور",
                     "Resetting...": "جاري التعيين...",
                     "Password reset successfully!": "تم تغيير كلمة المرور بنجاح!",
                     "Back to Login": "العودة لتسجيل الدخول",
-                    "Cancel": "إلغاء",
                     "email_not_found": "البريد الإلكتروني غير موجود.",
                     "invalid_code": "الكود غير صحيح أو كلمة المرور ضعيفة.",
                     "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
-                    "account_locked": "تم قفل حسابك بسبب كثرة المحاولات الخاطئة. حاول مجدداً لاحقاً."
+                    "account_locked": "تم قفل حسابك بسبب كثرة المحاولات الخاطئة. حاول مجدداً لاحقاً.",
+                    "page_not_found": "هذه الصفحة غير موجودة",
+                    "page_not_found_desc": "يبدو أن الرابط الذي تبحث عنه لم يعد موجوداً أو تم نقله.",
+                    "Back to Home": "العودة للرئيسية",
                 }
             }
         },

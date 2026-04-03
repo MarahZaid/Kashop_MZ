@@ -67,6 +67,7 @@ export default function FeaturesSection() {
                 {/* Text */}
                 <Box>
                   <Typography
+                  variant="h4"
                     sx={{
                       fontWeight: "bold",
                       fontSize: "1.1rem",

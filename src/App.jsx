@@ -9,9 +9,10 @@ import createCache from '@emotion/cache'
 import rtlPlugin from 'stylis-plugin-rtl'
 import { prefixer } from 'stylis'
 import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider } from '@emotion/react'
+import { ThemeProvider } from '@mui/material/styles'
 import getTheme from './theme.js'
 import useThemeStore from './store/useThemeStore.js'
+import './App.css';
 
 const ltrCache = createCache({ key: 'muiltr' });
 const rtlCache = createCache({

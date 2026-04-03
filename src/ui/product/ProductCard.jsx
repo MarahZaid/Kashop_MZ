@@ -6,10 +6,11 @@ import {
   Button
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 
 export default function ProductCard({ product }) {
+ 
+
 
   return (
     <Card
@@ -58,36 +59,14 @@ export default function ProductCard({ product }) {
             left: 0,
             right: 0,
             px: 2,
-            opacity: 0, // مخفي افتراضياً
-            transform: "translateY(10px)", // حركة بسيطة من أسفل لأعلى
+            opacity: 0, 
+            transform: "translateY(10px)", 
             transition: "0.3s ease-in-out",
             display: 'flex',
             gap: 1
           }}
         >
-          <Button
-            variant="contained"
-            fullWidth
-            startIcon={<ShoppingBagOutlinedIcon />}
-            sx={{
-              bgcolor: 'background.paper',   // ✅
-        color: 'text.primary',         // ✅
-        '&:hover': { bgcolor: 'action.hover' } , // ✅
-              textTransform: 'none',
-              fontWeight: 'bold',
-              borderRadius: 2,
-              
-            }}
-          >
-            Add to Cart
-          </Button>
           
-          <Box sx={{ 
-            bgcolor: 'background.paper',  p: 1, borderRadius: 2, display: 'flex', 
-            alignItems: 'center', cursor: 'pointer' 
-          }}>
-            <FavoriteBorderIcon sx={{ color: 'text.primary' }} />
-          </Box>
         </Box>
       </Box>
 
@@ -109,14 +88,14 @@ export default function ProductCard({ product }) {
           </Box>
         </Box>
 
-        <Typography fontWeight={600}>
+        <Typography fontWeight={500}>
           {product.name || "Product Name"}
         </Typography>
 
         <Typography
           sx={{
             mt: 1,
-            fontWeight: 700
+            fontWeight: 500
           }}
         >
           ${product.price}

@@ -56,10 +56,11 @@ export default function CategoriesSection() {
                             >
                                 <CardContent>
                                     <Typography
-                                        component="h3"
+                                    variant="h4"
+                                       
                                         fontWeight={700}
                                         fontSize="1.2rem"
-                                        color="text.primary"  // ← بدل "black"
+                                        color="text.primary"  
                                     >
                                         {category.name}
                                     </Typography>

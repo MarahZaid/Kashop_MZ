@@ -1,0 +1,197 @@
+
+
+/* ── Keyframes ── */
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0px 0px rgba(168, 85, 247, 0); }
+  50%       { box-shadow: 0 0 24px 8px rgba(168, 85, 247, 0.45); }
+}
+
+@keyframes spinSlow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to   { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes badgePop {
+  0%   { opacity: 0; transform: scale(0.6); }
+  70%  { transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes orbDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 15px) scale(0.97); }
+}
+
+@keyframes particleFloat {
+  0%   { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+  50%  { transform: translateY(-30px) translateX(10px); opacity: 1; }
+  100% { transform: translateY(-60px) translateX(-5px); opacity: 0; }
+}
+
+@keyframes lineGrow {
+  from { width: 0; }
+  to   { width: 80px; }
+}
+
+@keyframes btnShine {
+  0%   { left: -100%; }
+  60%  { left: 120%; }
+  100% { left: 120%; }
+}
+
+/* ── Classes ── */
+.heroBadge {
+  animation: badgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.badgeDot {
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+.heroTitle {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 700 !important;
+  animation: floatUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+.dividerLine {
+  display: inline-block;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  animation: lineGrow 1s ease 1.1s both;
+  border-radius: 2px;
+  margin-inline-end: 12px;
+  flex-shrink: 0;
+}
+
+.titleGradient {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 700 !important;
+  background: linear-gradient(90deg, #a855f7, #ec4899, #f97316, #a855f7);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.heroDesc {
+  font-family: 'DM Sans', sans-serif !important;
+  animation: floatUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+
+.heroBtns {
+  animation: floatUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
+}
+
+.heroStats {
+  animation: floatUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.95s both;
+}
+
+.statBox {
+  cursor: default;
+  transition: transform 0.2s ease;
+}
+.statBox:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.glowBtn {
+  position: relative !important;
+  overflow: hidden !important;
+  animation: pulseGlow 2.5s ease-in-out infinite !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.glowBtn:hover {
+  transform: translateY(-3px) scale(1.03) !important;
+  box-shadow: 0 12px 40px rgba(168, 85, 247, 0.6) !important;
+}
+.glowBtn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  animation: btnShine 3s ease-in-out infinite;
+}
+
+.outlineBtn {
+  transition: all 0.25s ease !important;
+}
+.outlineBtn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-2px) !important;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+  animation: orbDrift ease-in-out infinite;
+}
+
+/* Fix: rings anchored to right side so RTL doesn't break them */
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  top: 50%;
+  right: 200px;
+}
+.ringInner {
+  width: 320px;
+  height: 320px;
+  border: 1.5px solid rgba(168, 85, 247, 0.25);
+  animation: spinSlow 18s linear infinite;
+}
+.ringOuter {
+  width: 500px;
+  height: 500px;
+  border: 1.5px solid rgba(236, 72, 153, 0.15);
+  animation: spinReverse 28s linear infinite;
+}
+
+@media (max-width: 900px) {
+  .ring { display: none; }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat linear infinite;
+}
+
+.featureCard {
+  animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+.featureCard:hover {
+  transform: translateX(-6px) scale(1.02) !important;
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.3) !important;
+}
