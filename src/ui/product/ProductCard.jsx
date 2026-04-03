@@ -33,24 +33,25 @@ export default function ProductCard({ product }) {
 
       {/* IMAGE */}
       <Box
-        sx={{
-          height: 350,
-           backgroundColor: (theme) => theme.palette.mode === "dark" ? "#1e1e2e" : "#f3f4f6",
-          borderRadius: 3,
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
+  sx={{
+    width: "100%",
+    aspectRatio: "4 / 5", // مربع (تقدري تغيريها 4/5 أو 3/4)
+    backgroundColor: (theme) =>
+      theme.palette.mode === "dark" ? "#1e1e2e" : "#f3f4f6",
+    borderRadius: 3,
+    overflow: "hidden",
+    position: "relative",
+  }}
+>
         <CardMedia
-          component="img"
-          image={product.image}
-          sx={{
-            height: "100%",
-            objectFit: "cover",
-            border:"#bbbbbb solid 1px",
-            borderRadius: 5
-          }}
-        />
+  component="img"
+  image={product.image}
+  sx={{
+    width: "100%",
+    height: "100%",
+    objectFit: "cover", // مهم
+  }}
+/>
       <Box
           className="hover-button"
           sx={{
