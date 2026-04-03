@@ -16,6 +16,22 @@ const PRODUCTS_PER_PAGE = 12;
 const chipSx = (theme) => ({ bgcolor: theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff", color: "#c026d3", border: "1px solid #e879f9" });
 const selectedSx = (theme) => ({ "&.Mui-selected": { bgcolor: theme.palette.mode === "dark" ? "#3b0764" : "#fdf4ff", color: "#c026d3" }, "&.Mui-selected:hover": { bgcolor: "#fdf4ff" } });
 
+// ✅ دالة مساعدة تستخرج ID من الكاتيغوري كـ string دائماً
+const getCatId = (cat) => {
+    if (cat === null || cat === undefined) return "";
+    if (typeof cat === "string" || typeof cat === "number") return String(cat);
+    if (typeof cat === "object") return String(cat.id ?? cat.name ?? JSON.stringify(cat));
+    return String(cat);
+};
+
+// ✅ دالة مساعدة تستخرج اسم الكاتيغوري
+const getCatName = (cat) => {
+    if (cat === null || cat === undefined) return "";
+    if (typeof cat === "string") return cat;
+    if (typeof cat === "object") return cat.name ?? String(cat.id) ?? "";
+    return String(cat);
+};
+
 export default function Shop() {
     const { t } = useTranslation();
 
@@ -28,7 +44,7 @@ export default function Shop() {
 
     const [search, setSearch] = useState("");
     const [searchInput, setSearchInput] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState(""); // ✅ دائماً string
     const [priceRange, setPriceRange] = useState([0, 5000]);
     const [appliedPrice, setAppliedPrice] = useState([0, 5000]);
     const [sortBy, setSortBy] = useState("");
@@ -40,22 +56,57 @@ export default function Shop() {
 
     const activeFiltersCount = [selectedCategory, appliedPrice[0] > 0 || appliedPrice[1] < 5000, sortBy, search].filter(Boolean).length;
 
-    const { data, isLoading, isError, error } = useProducts({ limit: PRODUCTS_PER_PAGE, page, category: selectedCategory, minPrice: appliedPrice[0] > 0 ? appliedPrice[0] : "", maxPrice: appliedPrice[1] < 5000 ? appliedPrice[1] : "", sortBy, ascending, search });
+    const { data, isLoading, isError, error } = useProducts({
+        limit: PRODUCTS_PER_PAGE,
+        page,
+        category: selectedCategory,
+        minPrice: appliedPrice[0] > 0 ? appliedPrice[0] : "",
+        maxPrice: appliedPrice[1] < 5000 ? appliedPrice[1] : "",
+        sortBy,
+        ascending,
+        search
+    });
+
     const { data: categoriesData } = useCategories();
     const categories = categoriesData?.response?.data || [];
-    const products = selectedCategory ? (Array.isArray(data?.response) ? data.response : []) : (data?.response?.data || []);
+    const products = selectedCategory
+        ? (Array.isArray(data?.response) ? data.response : [])
+        : (data?.response?.data || []);
     const totalPages = selectedCategory ? 1 : (data?.response?.totalPages || 1);
 
-    const handleApplyFilters = () => { setSearch(searchInput); setAppliedPrice(priceRange); setPage(1); };
-    const handleClearFilters = () => { setSearchInput(""); setSearch(""); setSelectedCategory(""); setPriceRange([0, 5000]); setAppliedPrice([0, 5000]); setSortBy(""); setAscending(true); setPage(1); };
-    const handleCategoryClick = (catId) => {
-        setSelectedCategory(catId === selectedCategory ? "" : String(catId)); // ← String() للأمان
+    // ✅ الاسم المعروض للكاتيغوري المختارة في الـ Chip
+    const selectedCategoryName = categories.find(
+        (cat) => getCatId(cat) === selectedCategory
+    );
+    const selectedCategoryLabel = selectedCategoryName
+        ? getCatName(selectedCategoryName)
+        : selectedCategory;
+
+    const handleApplyFilters = () => {
+        setSearch(searchInput);
+        setAppliedPrice(priceRange);
         setPage(1);
     };
-    console.log(selectedCategory);
+
+    const handleClearFilters = () => {
+        setSearchInput("");
+        setSearch("");
+        setSelectedCategory("");
+        setPriceRange([0, 5000]);
+        setAppliedPrice([0, 5000]);
+        setSortBy("");
+        setAscending(true);
+        setPage(1);
+    };
+
+    // ✅ دائماً نحفظ string في selectedCategory
+    const handleCategoryClick = (cat) => {
+        const catId = getCatId(cat);
+        setSelectedCategory(catId === selectedCategory ? "" : catId);
+        setPage(1);
+    };
 
     return (
-
         <Box sx={{ bgcolor: "background.default", minHeight: "100vh", pb: 10 }}>
 
             {/* HEADER */}
@@ -68,7 +119,9 @@ export default function Shop() {
                     </Box>
                     <Typography variant="h3" fontWeight={700} color="white" sx={{ mb: 1 }}>
                         {t('Explore Our')}{" "}
-                        <Box component="span" sx={{ background: "linear-gradient(45deg,#a855f7,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{t('Products')}</Box>
+                        <Box component="span" sx={{ background: "linear-gradient(45deg,#a855f7,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                            {t('Products')}
+                        </Box>
                     </Typography>
                     <Typography sx={{ color: "rgba(255,255,255,0.55)", fontSize: 16 }}>{t('shop_header_desc')}</Typography>
                 </Container>
@@ -86,15 +139,33 @@ export default function Shop() {
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                     <FilterListIcon sx={{ color: "#c026d3" }} />
                                     <Typography fontWeight={700} fontSize={16}>{t('Filters')}</Typography>
-                                    {activeFiltersCount > 0 && <Chip label={activeFiltersCount} size="small" sx={{ bgcolor: "#c026d3", color: "white", height: 20, fontSize: 11 }} />}
+                                    {activeFiltersCount > 0 && (
+                                        <Chip label={activeFiltersCount} size="small" sx={{ bgcolor: "#c026d3", color: "white", height: 20, fontSize: 11 }} />
+                                    )}
                                 </Box>
-                                {activeFiltersCount > 0 && <Button size="small" onClick={handleClearFilters} startIcon={<CloseIcon fontSize="small" />} sx={{ color: "text.secondary", textTransform: "none", fontSize: 12 }}>{t('Clear all')}</Button>}
+                                {activeFiltersCount > 0 && (
+                                    <Button size="small" onClick={handleClearFilters} startIcon={<CloseIcon fontSize="small" />} sx={{ color: "text.secondary", textTransform: "none", fontSize: 12 }}>
+                                        {t('Clear all')}
+                                    </Button>
+                                )}
                             </Box>
 
                             {/* Search */}
                             <Box sx={{ p: 2.5, border: "1px solid", borderColor: "divider" }}>
-                                <TextField fullWidth size="small" placeholder={t('Search products...')} value={searchInput} onChange={(e) => setSearchInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleApplyFilters()}
-                                    InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ fontSize: 18, color: "#94a3b8" }} /></InputAdornment> }}
+                                <TextField
+                                    fullWidth
+                                    size="small"
+                                    placeholder={t('Search products...')}
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    onKeyDown={(e) => e.key === "Enter" && handleApplyFilters()}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon sx={{ fontSize: 18, color: "#94a3b8" }} />
+                                            </InputAdornment>
+                                        )
+                                    }}
                                     sx={{ "& .MuiOutlinedInput-root": { borderRadius: 2, "&:hover fieldset": { borderColor: "#c026d3" }, "&.Mui-focused fieldset": { borderColor: "#c026d3" } } }}
                                 />
                             </Box>
@@ -107,12 +178,30 @@ export default function Shop() {
                                 </Box>
                                 <Collapse in={openCategories}>
                                     <List dense disablePadding sx={{ px: 1, pb: 1.5 }}>
-                                        <ListItemButton selected={selectedCategory === ""} onClick={() => handleCategoryClick("")} sx={{ borderRadius: 2, mb: 0.5, ...selectedSx }}> <ListItemText primary={t('All Categories')} primaryTypographyProps={{ fontSize: 13 }} /></ListItemButton>
-                                        {categories.map((cat) => (
-                                            <ListItemButton key={cat.id || cat} selected={selectedCategory === (cat.id || cat)} onClick={() => handleCategoryClick(cat.id || cat)} sx={{ borderRadius: 2, mb: 0.5, ...selectedSx }}>
-                                                <ListItemText primary={cat.name || cat} primaryTypographyProps={{ fontSize: 13 }} />
-                                            </ListItemButton>
-                                        ))}
+                                        {/* ✅ All Categories */}
+                                        <ListItemButton
+                                            selected={selectedCategory === ""}
+                                            onClick={() => handleCategoryClick("")}
+                                            sx={{ borderRadius: 2, mb: 0.5, ...selectedSx }}
+                                        >
+                                            <ListItemText primary={t('All Categories')} primaryTypographyProps={{ fontSize: 13 }} />
+                                        </ListItemButton>
+
+                                        {/* ✅ كل كاتيغوري - نمرر الـ cat object للدالة وهي بتتعامل معه */}
+                                        {categories.map((cat) => {
+                                            const catId = getCatId(cat);
+                                            const catName = getCatName(cat);
+                                            return (
+                                                <ListItemButton
+                                                    key={catId}
+                                                    selected={selectedCategory === catId}
+                                                    onClick={() => handleCategoryClick(cat)}
+                                                    sx={{ borderRadius: 2, mb: 0.5, ...selectedSx }}
+                                                >
+                                                    <ListItemText primary={catName} primaryTypographyProps={{ fontSize: 13 }} />
+                                                </ListItemButton>
+                                            );
+                                        })}
                                     </List>
                                 </Collapse>
                             </Box>
@@ -125,7 +214,14 @@ export default function Shop() {
                                 </Box>
                                 <Collapse in={openPrice}>
                                     <Box sx={{ px: 2.5, pb: 2.5 }}>
-                                        <Slider value={priceRange} onChange={(_, val) => setPriceRange(val)} min={0} max={5000} step={50} valueLabelDisplay="auto" valueLabelFormat={(v) => `$${v}`} sx={{ color: "#c026d3", "& .MuiSlider-thumb": { "&:hover": { boxShadow: "0 0 0 8px rgba(192,38,211,0.15)" } } }} />
+                                        <Slider
+                                            value={priceRange}
+                                            onChange={(_, val) => setPriceRange(val)}
+                                            min={0} max={5000} step={50}
+                                            valueLabelDisplay="auto"
+                                            valueLabelFormat={(v) => `$${v}`}
+                                            sx={{ color: "#c026d3", "& .MuiSlider-thumb": { "&:hover": { boxShadow: "0 0 0 8px rgba(192,38,211,0.15)" } } }}
+                                        />
                                         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 0.5 }}>
                                             <Typography variant="body2" color="text.secondary" fontSize={12}>${priceRange[0]}</Typography>
                                             <Typography variant="body2" color="text.secondary" fontSize={12}>${priceRange[1]}</Typography>
@@ -143,12 +239,23 @@ export default function Shop() {
                                 <Collapse in={openSort}>
                                     <Box sx={{ px: 2.5, pb: 2.5, display: "flex", flexDirection: "column", gap: 1.5 }}>
                                         <FormControl size="small" fullWidth>
-                                            <Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} displayEmpty sx={{ borderRadius: 2, "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#c026d3" } }}>
-                                                {SORT_OPTIONS.map((opt) => <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>)}
+                                            <Select
+                                                value={sortBy}
+                                                onChange={(e) => setSortBy(e.target.value)}
+                                                displayEmpty
+                                                sx={{ borderRadius: 2, "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#c026d3" } }}
+                                            >
+                                                {SORT_OPTIONS.map((opt) => (
+                                                    <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+                                                ))}
                                             </Select>
                                         </FormControl>
                                         <FormControl size="small" fullWidth>
-                                            <Select value={ascending} onChange={(e) => setAscending(e.target.value)} sx={{ borderRadius: 2, "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#c026d3" } }}>
+                                            <Select
+                                                value={ascending}
+                                                onChange={(e) => setAscending(e.target.value)}
+                                                sx={{ borderRadius: 2, "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#c026d3" } }}
+                                            >
                                                 <MenuItem value={true}>{t('Ascending')} ↑</MenuItem>
                                                 <MenuItem value={false}>{t('Descending')} ↓</MenuItem>
                                             </Select>
@@ -159,7 +266,14 @@ export default function Shop() {
 
                             {/* Apply */}
                             <Box sx={{ p: 2.5 }}>
-                                <Button fullWidth variant="contained" onClick={handleApplyFilters} sx={{ bgcolor: "#c026d3", borderRadius: 2, py: 1.2, fontWeight: 700, textTransform: "none", fontSize: 14, boxShadow: "0 4px 15px rgba(192,38,211,0.3)", "&:hover": { bgcolor: "#a21caf" } }}>{t('Apply Filters')}</Button>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    onClick={handleApplyFilters}
+                                    sx={{ bgcolor: "#c026d3", borderRadius: 2, py: 1.2, fontWeight: 700, textTransform: "none", fontSize: 14, boxShadow: "0 4px 15px rgba(192,38,211,0.3)", "&:hover": { bgcolor: "#a21caf" } }}
+                                >
+                                    {t('Apply Filters')}
+                                </Button>
                             </Box>
                         </Paper>
                     </Grid>
@@ -169,37 +283,65 @@ export default function Shop() {
 
                         {/* Top bar */}
                         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                            <Typography color="text.secondary" fontSize={14}>{isLoading ? t('Loading...') : `${products.length} ${t('products found')}`}</Typography>
+                            <Typography color="text.secondary" fontSize={14}>
+                                {isLoading ? t('Loading...') : `${products.length} ${t('products found')}`}
+                            </Typography>
                             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                                {/* ✅ الـ Chip بيعرض الاسم النصي فقط - مش object */}
                                 {selectedCategory && (
                                     <Chip
-                                        label={`${t('Category')}: ${categories.find(c => (c.id || c) == selectedCategory)?.name || selectedCategory
-                                            }`}
+                                        label={`${t('Category')}: ${selectedCategoryLabel}`}
                                         size="small"
                                         onDelete={() => { setSelectedCategory(""); setPage(1); }}
                                         sx={chipSx}
                                     />
                                 )}
-                                {(appliedPrice[0] > 0 || appliedPrice[1] < 5000) && <Chip label={`$${appliedPrice[0]} – $${appliedPrice[1]}`} size="small" onDelete={() => { setAppliedPrice([0, 5000]); setPriceRange([0, 5000]); setPage(1); }} sx={chipSx} />}
-                                {search && <Chip label={`"${search}"`} size="small" onDelete={() => { setSearch(""); setSearchInput(""); setPage(1); }} sx={chipSx} />}
+                                {(appliedPrice[0] > 0 || appliedPrice[1] < 5000) && (
+                                    <Chip
+                                        label={`$${appliedPrice[0]} – $${appliedPrice[1]}`}
+                                        size="small"
+                                        onDelete={() => { setAppliedPrice([0, 5000]); setPriceRange([0, 5000]); setPage(1); }}
+                                        sx={chipSx}
+                                    />
+                                )}
+                                {search && (
+                                    <Chip
+                                        label={`"${search}"`}
+                                        size="small"
+                                        onDelete={() => { setSearch(""); setSearchInput(""); setPage(1); }}
+                                        sx={chipSx}
+                                    />
+                                )}
                             </Box>
                         </Box>
 
-                        {isError && <Box sx={{ textAlign: "center", py: 8, color: "error.main" }}><Typography>{error?.message || "Something went wrong."}</Typography></Box>}
+                        {isError && (
+                            <Box sx={{ textAlign: "center", py: 8, color: "error.main" }}>
+                                <Typography>{error?.message || "Something went wrong."}</Typography>
+                            </Box>
+                        )}
 
                         {/* Grid */}
                         <Grid container spacing={2.5}>
                             {isLoading
-                                ? Array.from({ length: 8 }).map((_, i) => <Grid item size={{ xs: 12, sm: 6, lg: 4 }} key={i}><Skeleton variant="rounded" height={380} sx={{ borderRadius: 3 }} /></Grid>)
-                                : products.length === 0
-                                    ? <Grid item size={{ xs: 12 }}>
-                                        <Box sx={{ textAlign: "center", py: 12 }}>
-                                            <Typography fontSize={48} mb={2}>🔍</Typography>
-                                            <Typography variant="h6" fontWeight={600} mb={1}>{t('No products found')}</Typography>
-                                            <Typography color="text.secondary" mb={3}>{t('no_products_desc')}</Typography>
-                                            <Button variant="outlined" onClick={handleClearFilters} sx={{ borderColor: "#c026d3", color: "#c026d3", borderRadius: 2, textTransform: "none" }}>{t('Clear Filters')}</Button>
-                                        </Box>
+                                ? Array.from({ length: 8 }).map((_, i) => (
+                                    <Grid item size={{ xs: 12, sm: 6, lg: 4 }} key={i}>
+                                        <Skeleton variant="rounded" height={380} sx={{ borderRadius: 3 }} />
                                     </Grid>
+                                ))
+                                : products.length === 0
+                                    ? (
+                                        <Grid item size={{ xs: 12 }}>
+                                            <Box sx={{ textAlign: "center", py: 12 }}>
+                                                <Typography fontSize={48} mb={2}>🔍</Typography>
+                                                <Typography variant="h6" fontWeight={600} mb={1}>{t('No products found')}</Typography>
+                                                <Typography color="text.secondary" mb={3}>{t('no_products_desc')}</Typography>
+                                                <Button variant="outlined" onClick={handleClearFilters} sx={{ borderColor: "#c026d3", color: "#c026d3", borderRadius: 2, textTransform: "none" }}>
+                                                    {t('Clear Filters')}
+                                                </Button>
+                                            </Box>
+                                        </Grid>
+                                    )
                                     : products.map((product) => (
                                         <Grid item size={{ xs: 12, sm: 6, lg: 4 }} key={product.id}>
                                             <Link component={RouterLink} to={`/products/${product.id}`} underline="none" color="inherit" sx={{ display: "block" }}>
@@ -213,7 +355,11 @@ export default function Shop() {
                         {/* Pagination */}
                         {!isLoading && totalPages > 1 && (
                             <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
-                                <Pagination count={totalPages} page={page} onChange={(_, val) => { setPage(val); window.scrollTo({ top: 0, behavior: "smooth" }); }} shape="rounded"
+                                <Pagination
+                                    count={totalPages}
+                                    page={page}
+                                    onChange={(_, val) => { setPage(val); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                                    shape="rounded"
                                     sx={{ "& .MuiPaginationItem-root": { "&.Mui-selected": { bgcolor: "#c026d3", color: "white" }, "&:hover": { bgcolor: "#fdf4ff" } } }}
                                 />
                             </Box>
