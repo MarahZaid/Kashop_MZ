@@ -15,6 +15,8 @@ export default function useCategories() {
         queryFn: getCategories,
         staleTime: 1000 * 60 * 5,
         enabled: i18n.isInitialized 
+
+    
     });
 
     return query;
