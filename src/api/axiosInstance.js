@@ -7,8 +7,8 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-    
-    config.headers["Accept-Language"] = i18n.language;
+    const lang = i18n.language || localStorage.getItem('i18nextLng') || 'en';
+    config.headers["Accept-Language"] = lang;
     return config;
 });
 

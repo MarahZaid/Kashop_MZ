@@ -8,8 +8,10 @@ import {
 
 import StarIcon from "@mui/icons-material/Star";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useTranslation } from 'react-i18next';
 
 export default function TestimonialCard({ text, name, city, img }) {
+  const { t } = useTranslation();
   return (
     <Paper
       elevation={0}
@@ -50,7 +52,7 @@ borderColor: "divider",
 
         <Chip
           icon={<CheckCircleIcon />}
-          label="Verified"
+          label={t('Verified')} 
           size="small"
           sx={{
     backgroundColor: (theme) => theme.palette.mode === "dark" ? "#14532d" : "#dcfce7",  // ✅

@@ -74,8 +74,6 @@ i18n
                     "Shipping & Returns": "Shipping & Returns",
                     "Size Guide": "Size Guide",
                     "Track Order": "Track Order",
-
-
                     "Careers": "Careers",
                     "Press": "Press",
                     "All rights reserved.": "All rights reserved.",
@@ -187,7 +185,6 @@ i18n
                     "Active": "Active",
                     "Cancelled": "Cancelled",
                     "Order #": "Order #{{id}}",
-
                     "Light Mode": "Light Mode",
                     "Dark Mode": "Dark Mode",
                     "Contact Us": "Contact Us",
@@ -206,8 +203,8 @@ i18n
                     "Send Message": "Send Message",
                     "Working Hours": "Working Hours",
                     "Location": "Location",
-                    "contact_phone": "+970 599 000 000",
-                    "contact_email": "support@kashop.com",
+                    "contact_phone": "+970 594 061 749",
+                    "contact_email": "mmzaid000@gmail.com",
                     "contact_hours": "Sun – Thu, 9AM – 6PM",
                     "contact_location": "Nablus, Palestine",
                     "Frequently Asked Questions": "Frequently Asked Questions",
@@ -244,7 +241,12 @@ i18n
                     "page_not_found": "Page Not Found",
                     "page_not_found_desc": "The link you followed may be broken or the page may have been removed.",
                     "Back to Home": "Back to Home",
-
+                    "Our Location": "Our Location",
+                    "Our Team": "Our Team",
+                    "Newsletter": "Newsletter",
+                    "Verified": "Verified",
+                    "Price": "Price",
+                    "Accessories": "Accessories",
 
                 }
             },
@@ -267,7 +269,6 @@ i18n
                     "Browse Categories": "تصفح الأقسام",
                     "Happy Customers": "عميل سعيد",
                     "Average Rating": "متوسط التقييم",
-
                     "Free Shipping": "شحن مجاني",
                     "free_shipping_desc": "على الطلبات فوق $100",
                     "Secure Checkout": "دفع آمن",
@@ -315,8 +316,6 @@ i18n
                     "Shipping & Returns": "الشحن والإرجاع",
                     "Size Guide": "دليل المقاسات",
                     "Track Order": "تتبع الطلب",
-
-
                     "Careers": "وظائف",
                     "Press": "الصحافة",
                     "All rights reserved.": "جميع الحقوق محفوظة.",
@@ -447,8 +446,8 @@ i18n
                     "Send Message": "إرسال الرسالة",
                     "Working Hours": "ساعات العمل",
                     "Location": "الموقع",
-                    "contact_phone": "+970 599 000 000",
-                    "contact_email": "support@kashop.com",
+                    "contact_phone": "+970 594 061 749",
+                    "contact_email": "mmzaid000@gmail.com",
                     "contact_hours": "الأحد – الخميس، ٩ص – ٦م",
                     "contact_location": "نابلس، فلسطين",
                     "Frequently Asked Questions": "أسئلة شائعة",
@@ -485,6 +484,12 @@ i18n
                     "page_not_found": "هذه الصفحة غير موجودة",
                     "page_not_found_desc": "يبدو أن الرابط الذي تبحث عنه لم يعد موجوداً أو تم نقله.",
                     "Back to Home": "العودة للرئيسية",
+                    "Our Location": "موقعنا",
+                    "Our Team":"فريقنا",
+                    "Newsletter":"النشرة الاخبارية",
+                    "Verified": "تم التحقق منه", 
+                    "Price": "السعر",
+                    "Accessories": "إكسسوارات",
                 }
             }
         },
