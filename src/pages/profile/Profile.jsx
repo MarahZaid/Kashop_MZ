@@ -88,10 +88,22 @@ export default function Profile() {
         </Paper>
 
         {/* Layout: Sidebar + Content */}
-        <Box sx={{ display: "flex", gap: 3, alignItems: "flex-start", flexDirection: { xs: "column", md: "row" } }}>
+      
+        <Box sx={{
+          display: "flex",
+          gap: 3,
+          alignItems: "flex-start",
+          flexDirection: { xs: "column", md: "row" },
+          width: "100%"
+        }}>
 
-          {/* Sidebar Nav */}
-          <Paper elevation={0} sx={{ borderRadius: "18px", border: "1px solid", borderColor: "divider", p: 2, minWidth: 200, width: { xs: "100%", md: 220 }, flexShrink: 0 }}>
+          {/* Sidebar */}
+          <Paper elevation={0} sx={{
+            borderRadius: "18px", border: "1px solid", borderColor: "divider",
+            p: 2,
+            width: { xs: "100%", md: 220 },
+            flexShrink: 0
+          }}>
             <Typography sx={{ fontSize: "0.75rem", fontWeight: 700, color: "text.disabled", textTransform: "uppercase", letterSpacing: 1, px: 2, mb: 1 }}>
               {t('Navigation')}
             </Typography>
@@ -102,7 +114,15 @@ export default function Profile() {
           </Paper>
 
           {/* Main Content */}
-          <Paper elevation={0} sx={{ borderRadius: "18px", border: "1px solid", borderColor: "divider", p: { xs: 3, md: 4 }, flex: 1, minHeight: 300 }}>
+          
+          <Paper elevation={0} sx={{
+            borderRadius: "18px", border: "1px solid", borderColor: "divider",
+            p: { xs: 3, md: 4 },
+            flex: 1,
+            minHeight: 300,
+            minWidth: 0,
+            width: { xs: "100%", md: "auto" }
+          }}>
             <Outlet context={{ data }} />
           </Paper>
         </Box>

@@ -23,11 +23,14 @@ function OrderCard({ order }) {
   );
 
   return (
+
     <Box
       sx={{
         border: "1px solid", borderColor: "divider", borderRadius: "14px", p: 2.5,
         display: "flex", flexDirection: { xs: "column", sm: "row" },
         alignItems: { sm: "center" }, gap: 2, transition: "all 0.2s",
+        width: "100%",  // ← هاد
+        boxSizing: "border-box",  // ← وهاد
         "&:hover": { borderColor: "#c026d3", boxShadow: "0 4px 20px rgba(192,38,211,0.1)" },
       }}
     >
@@ -67,7 +70,7 @@ export default function ProfileOrders() {
   const { t } = useTranslation();
 
   return (
-    <Box>
+    <Box sx={{ width: "100%" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 0.5 }}>
         <Typography sx={{ fontWeight: 700, fontSize: "1.15rem" }}>
           {t('My Orders')}
@@ -89,7 +92,8 @@ export default function ProfileOrders() {
           <Typography>{t('No orders yet')}</Typography>
         </Box>
       ) : (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+        
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, width: "100%" }}>
           {orders.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}
