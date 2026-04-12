@@ -2,7 +2,7 @@ import axios from "axios";
 import i18n from "../i18next";
 
 const axiosInstance = axios.create({
-    baseURL: 'https://knowledgeshop.runasp.net/api',
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
 });
 

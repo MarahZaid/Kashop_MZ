@@ -3,7 +3,7 @@ import i18n from "../i18next";
 import { useAuthStore } from "../store/useAuthStore";
 
 const authAxiosInstance = axios.create({
-    baseURL: 'https://knowledgeshop.runasp.net/api',
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
 });
 
@@ -24,7 +24,7 @@ authAxiosInstance.interceptors.response.use(
             originalRequest._retry = true;
             try {
                 const refreshResponse = await axios.post(
-                    'https://knowledgeshop.runasp.net/api/auth/Account/RefreshToken',
+                    `${import.meta.env.VITE_API_BASE_URL}/auth/Account/RefreshToken`,
                     {},
                     { withCredentials: true }
                 );

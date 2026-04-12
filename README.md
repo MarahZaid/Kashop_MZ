@@ -26,7 +26,7 @@ https://knowledgeshop.runasp.net/api
 | 👤 **Profile** | View info, change email & password, order history |
 | 📍 **Contact Page** | Interactive map (Leaflet), FAQ, contact form |
 | 📱 **Responsive** | Works on all screen sizes with a mobile Drawer |
-| ⚡ **Performance** | Smart caching with TanStack Query, Skeleton loading |
+| ⚡ **Performance** | Smart caching with TanStack Query|
 
 ---
 
@@ -291,8 +291,6 @@ npm run lint     # Run ESLint
 ### Environment Variables `.env`
 
 ```env
-# The project currently hardcodes the base URL inside axiosInstance.js
-# Move it here for better practices:
 VITE_API_BASE_URL=https://knowledgeshop.runasp.net/api
 ```
 

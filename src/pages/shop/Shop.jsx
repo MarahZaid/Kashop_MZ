@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Container, Grid, Typography, Link, TextField, Select, MenuItem, FormControl, Slider, Button, Chip, InputAdornment, Skeleton, Pagination, Paper, List, ListItemButton, ListItemText, Collapse } from "@mui/material";
+import { Box, Container, Grid, Typography, Link, TextField, Select, MenuItem, FormControl, Slider, Button, Chip, InputAdornment, Pagination, Paper, List, ListItemButton, ListItemText, Collapse } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
@@ -101,7 +101,7 @@ export default function Shop() {
         setPage(1);
     };
 
-   
+
     const handleCategoryClick = (cat) => {
         const catId = getCatId(cat);
         setSelectedCategory(catId === selectedCategory ? "" : catId);
@@ -189,7 +189,7 @@ export default function Shop() {
                                             <ListItemText primary={t('All Categories')} primaryTypographyProps={{ fontSize: 13 }} />
                                         </ListItemButton>
 
-                                        
+
                                         {categories.map((cat) => {
                                             const catId = getCatId(cat);
                                             const catName = getCatName(cat);
@@ -289,7 +289,7 @@ export default function Shop() {
                                 {isLoading ? t('Loading...') : `${products.length} ${t('products found')}`}
                             </Typography>
                             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                               
+
                                 {selectedCategory && (
                                     <Chip
                                         label={`${t('Category')}: ${selectedCategoryLabel}`}
@@ -325,33 +325,13 @@ export default function Shop() {
 
                         {/* Grid */}
                         <Grid container spacing={2.5}>
-                            {isLoading
-                                ? Array.from({ length: 8 }).map((_, i) => (
-                                    <Grid item size={{ xs: 12, sm: 6, lg: 4 }} key={i}>
-                                        <Skeleton variant="rounded" height={380} sx={{ borderRadius: 3 }} />
-                                    </Grid>
-                                ))
-                                : products.length === 0
-                                    ? (
-                                        <Grid item size={{ xs: 12 }}>
-                                            <Box sx={{ textAlign: "center", py: 12 }}>
-                                                <Typography fontSize={48} mb={2}>🔍</Typography>
-                                                <Typography variant="h6" fontWeight={600} mb={1}>{t('No products found')}</Typography>
-                                                <Typography color="text.secondary" mb={3}>{t('no_products_desc')}</Typography>
-                                                <Button variant="outlined" onClick={handleClearFilters} sx={{ borderColor: "#c026d3", color: "#c026d3", borderRadius: 2, textTransform: "none" }}>
-                                                    {t('Clear Filters')}
-                                                </Button>
-                                            </Box>
-                                        </Grid>
-                                    )
-                                    : products.map((product) => (
-                                        <Grid item size={{ xs: 12, sm: 6, lg: 4 }} key={product.id}>
-                                            <Link component={RouterLink} to={`/products/${product.id}`} underline="none" color="inherit" sx={{ display: "block" }}>
-                                                <ProductCard product={product} />
-                                            </Link>
-                                        </Grid>
-                                    ))
-                            }
+                            {products.map((product) => (
+                                <Grid item size={{ xs: 12, sm: 6, lg: 4 }} key={product.id}>
+                                    <Link component={RouterLink} to={`/products/${product.id}`} underline="none" color="inherit" sx={{ display: "block" }}>
+                                        <ProductCard product={product} />
+                                    </Link>
+                                </Grid>
+                            ))}
                         </Grid>
 
                         {/* Pagination */}
