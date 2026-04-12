@@ -4,9 +4,11 @@
 
 ---
 
-## 🌐 Live API
+## 🌐 Live Demo
 
-The project connects to a real backend at:
+🔗 [kashop-mz.onrender.com](https://kashop-mz.onrender.com)
+
+**API Base URL:**
 ```
 https://knowledgeshop.runasp.net/api
 ```

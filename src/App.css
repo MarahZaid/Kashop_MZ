@@ -2,9 +2,9 @@
 
 :root {
   /* ── Font Families ── */
-  --font-display:  'Syne', sans-serif;      /* عناوين كبيرة، أزرار */
-  --font-body:     'DM Sans', sans-serif;   /* نصوص عادية */
-  --font-mono:     'JetBrains Mono', monospace; /* أكواد، أرقام */
+  --font-display:  'Syne', sans-serif;      
+  --font-body:     'DM Sans', sans-serif;  
+  --font-mono:     'JetBrains Mono', monospace; 
 
   /* ── Font Sizes (fluid scale) ── */
   --text-xs:   0.75rem;   /* 12px */
